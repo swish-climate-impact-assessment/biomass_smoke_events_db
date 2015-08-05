@@ -21,7 +21,7 @@ https://github.com/swish-climate-impact-assessment/biomass_smoke_events
 - This is the best way to import new air pollution data and calculate events using the associated R package [https://github.com/swish-climate-impact-assessment/BiosmokeValidatedEvents](https://github.com/swish-climate-impact-assessment/BiosmokeValidatedEvents)
 
 #### Simple instructions for R interface:
-`{r}
+```r
 library(RSQLite)  
 drv <- dbDriver("SQLite")
 con <- dbConnect(drv, dbname = "path/to/web2py/applications/biomass_smoke_events/databases/storage.sqlite")
@@ -29,7 +29,7 @@ qc  <- dbGetQuery(con , "select * from biomass_smoke_reference")
 str(qc)
 qc2  <- dbGetQuery(con , "select * from biomass_smoke_event")
 # etc
-`
+```
 
 # History
 
