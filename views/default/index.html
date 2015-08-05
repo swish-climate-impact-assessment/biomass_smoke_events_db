@@ -1,0 +1,29 @@
+
+{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{extend 'layout.html'}}
+    
+  {{if 'message' in globals():}}
+    <h3>{{=message}}</h3>
+
+    <h4>{{=T('Instructions')}}</h4>
+<ol>
+      <li>{{=T('You are using the events database')}}</li>
+  <li>{{=XML(T('The list of validated events is at %s',
+               A('%(application)s/forms/manage_events/'%request,
+           _href=URL('forms','manage_events'))))}}</li>
+  
+  <li>{{=XML(T('The main tool for managing references that validate events is at %s',
+               A('%(application)s/forms/manage_references/'%request,
+           _href=URL('forms','manage_references'))))}}</li>
+    <li>{{=T('To become a user of the data inventory please register in top right corner, then email ivan.hanigan at gmail.com requesting approval.')}}</li>
+</ol>
+    {{elif 'content' in globals():}}
+{{=content}}
+    {{else:}}
+{{=BEAUTIFY(response._vars)}}
+    {{pass}}
+
+    {{block right_sidebar}}
+{{=A(T("About this site"), _href=URL('static', 'index.html'), _class='btn',
+         _style='margin-top: 1em;')}}
+{{end}}
