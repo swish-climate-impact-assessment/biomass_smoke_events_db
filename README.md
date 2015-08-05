@@ -14,7 +14,7 @@ https://github.com/swish-climate-impact-assessment/biomass_smoke_events
 - Clone or Download this github repo as a zip
 - put the files within this repo into the `applications/biomass_smoke_events` folder of your web2py download 
 - run the `web2py` program as per the instructions for your OS
-- use a browser to visit `127.0.0.1:8000/biomass_smoke_events`
+- use a web browser to visit the local website `http://127.0.0.1:8000/biomass_smoke_events`
 - you have to register so that you can enter data 
 - the references are added first, and then the events that reference validates are added
 
