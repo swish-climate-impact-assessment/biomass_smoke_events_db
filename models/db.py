@@ -11,7 +11,8 @@
 
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
-    db = DAL('sqlite://storage.sqlite',pool_size=1, fake_migrate_all = True)
+    db = DAL('sqlite://storage.sqlite',pool_size=1, fake_migrate_all = False)
+    ## db = DAL("postgres://w2p_user:xpassword@localhost:5432/ewedb_staging", fake_migrate_all = False)
 else:
     ## connect to Google BigTable (optional 'google:datastore://namespace')
     db = DAL('google:datastore')
@@ -55,7 +56,7 @@ mail.settings.login = 'username:password'
 
 ## configure auth policy
 auth.settings.registration_requires_verification = False
-auth.settings.registration_requires_approval = False
+auth.settings.registration_requires_approval = True
 auth.settings.reset_password_requires_verification = True
 
 ## if you need to use OpenID, Facebook, MySpace, Twitter, Linkedin, etc.
@@ -94,6 +95,7 @@ db.define_table(
     Field('url', 'string', comment= 'URL.'),
     Field('summary', 'text', comment= 'Short summary.'),
     Field('abstract', 'text', comment= 'Executive summary or journal abstract.'),
+    Field('protocol_used', 'text', comment= 'The protocol used to identify evidence of an event, for example Johnston2011 for the original method of searching all news, journals, reports and satellite data, or Satellite Only if only satellite data where used.  Optionally leave this blank and it will be inserted on submission to the online master database.  Please also submit information on the protocol to the database manager.'),
     format = '%(source)s %(id)s' 
     )
 
