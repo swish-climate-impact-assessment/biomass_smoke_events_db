@@ -1,0 +1,10 @@
+#+TITLE:Biomass smoke events database 
+#+AUTHOR: Ivan Hanigan
+#+email: ivan.hanigan@anu.edu.au
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [a4paper]
+#+LATEX: \tableofcontents
+-----
+
+* TODO-List
+** TODO this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
