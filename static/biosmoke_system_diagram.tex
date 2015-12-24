@@ -1,5 +1,5 @@
 
-\documentclass[landscape]{article}
+\documentclass{article}
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usetikzlibrary{positioning}
@@ -17,17 +17,23 @@
             >=stealth,
          every node/.append style={align=center}]
 %\tikzstyle{every node}=[draw,rectangle] 
-\node (root) at (0,0) [draw=black!50,rectangle] {Online database \\ web interface}
-
-node (CC) at (2,-2) [draw=black!50,rectangle]{Snapshot of database \\ on Github} 
-node (JH) at (5,-5) [draw=black!50,rectangle]{Contributer}
-node (rightmost) at (10,-10) [draw=black!50,rectangle] {Validated events}  
+\node (root) at (0,0) [draw=black!50,rectangle] {Online database \\ and web interface}
+node (GH) at (2,-2) [draw=black!50,rectangle]{Snapshot of database \\ on Github} 
+node (local) at (5,-5) [draw=black!50,rectangle]{Contributer \\ local computer}
+node (AP) at (-1,-3.5) [draw=black!50,rectangle]{Air pollution}
+node (ref) at (-0.5,-7) [draw=black!50,rectangle]{References \\(satellite, news, etc)}
+node (validated) at (8,-8) [draw=black!50,rectangle] {New air pollution data \\ + validated events}  
 
  ; 
 %\tikzstyle{every node}=[] 
-\draw[-latex,color=red] (rightmost) .. controls +(east:6cm) and +(right:8cm) .. node[near end,above right,color=black] {feedback} (root); 
-\draw [outpt] (CC)--(root);
-\draw [outpt] (JH)--(root);
-\draw [outpt] (rightmost)--(root);
+
+\draw [-latex,color=blue] (root)  .. controls +(.5,-1) .. node (DM)[near end,above right,color=black, dashed] {Data manager} (GH);
+\draw[-latex,color=olive] (DM) .. controls +(5,0) and +(5,-0.5) .. node[near end,above right,color=black] {QC check + upload} (root); 
+\draw [-latex,color=blue] (GH) .. controls +(.5,-1) .. node (w2p)[near end,above right,color=black] {Contributer downloads web2py app\\and R package} (local);
+\draw [-latex,color=blue] (AP) .. controls +(.5,-1) .. node (w2p)[near end,above right,color=black] {Impute,\\ quantiles} (local);
+\draw [-latex,color=blue] (ref) .. controls +(0,1) .. node (w2p)[near end,above right,color=black] {Review} (local);
+\draw [-latex,color=blue] (local) .. controls +(.5,-1) .. node (w2p)[near end,above right,color=black] {Data entry of references\\+ events} (validated);
+\draw[-latex,color=olive] (validated) .. controls +(8,0) and +(8,-0.5) .. node[near end,above right,color=black] {Email or \\Github pull request} (DM); 
 \end{tikzpicture} 
+
 \end{document}
