@@ -1,0 +1,33 @@
+
+\documentclass[landscape]{article}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes}
+\usetikzlibrary{mindmap}
+\usetikzlibrary{decorations.text}
+
+\begin{document}
+
+\begin{tikzpicture} [
+            outpt/.style={->,blue!80!black,very thick},
+            >=stealth,
+         every node/.append style={align=center}]
+%\tikzstyle{every node}=[draw,rectangle] 
+\node (root) at (0,0) [draw=black!50,rectangle] {Online database \\ web interface}
+
+node (CC) at (2,-2) [draw=black!50,rectangle]{Snapshot of database \\ on Github} 
+node (JH) at (5,-5) [draw=black!50,rectangle]{Contributer}
+node (rightmost) at (10,-10) [draw=black!50,rectangle] {Validated events}  
+
+ ; 
+%\tikzstyle{every node}=[] 
+\draw[-latex,color=red] (rightmost) .. controls +(east:6cm) and +(right:8cm) .. node[near end,above right,color=black] {feedback} (root); 
+\draw [outpt] (CC)--(root);
+\draw [outpt] (JH)--(root);
+\draw [outpt] (rightmost)--(root);
+\end{tikzpicture} 
+\end{document}
