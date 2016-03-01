@@ -1,0 +1,89 @@
+"Variable","Type","Attributes","Value","Count","Percent"
+"studysite","character","Sydney",NA,7305,100
+"admdate","missing","NA's",NA,7305,100
+"date","date","Min.","1994-01-01",NA,NA
+"","","1st Qu.","1999-01-01",NA,NA
+"","","Median","2004-01-01",NA,NA
+"","","Mean","2004-01-01",NA,NA
+"","","3rd Qu.","2008-12-31",NA,NA
+"","","Max.","2013-12-31",NA,NA
+"maximum_temperatur","missing","NA's",NA,7305,100
+"minimum_temperatur","missing","NA's",NA,7305,100
+"dewpt","missing","NA's",NA,7305,100
+"temp_lag","missing","NA's",NA,7305,100
+"dew_lag","missing","NA's",NA,7305,100
+"flu","missing","NA's",NA,7305,100
+"pm10pct_lag0","number","Min.","0",NA,NA
+"","","1st Qu.","0.2493",NA,NA
+"","","Median","0.5",NA,NA
+"","","Mean","0.5001",NA,NA
+"","","3rd Qu.","0.7484",NA,NA
+"","","Max.","1",NA,NA
+"pm25pct_lag0","number","Min.","0",NA,NA
+"","","1st Qu.","0.24668",NA,NA
+"","","Median","0.50316",NA,NA
+"","","Mean","0.5",NA,NA
+"","","3rd Qu.","0.75",NA,NA
+"","","Max.","1",NA,NA
+"","","NA's","976",NA,NA
+"bushfire_lag0","missing","NA's",NA,7305,100
+"dust_lag0","missing","NA's",NA,7305,100
+"nonbiomassfire_lag0","missing","NA's",NA,7305,100
+"nonbiomassnonfire_lag0","missing","NA's",NA,7305,100
+"possiblebiomass_lag0","missing","NA's",NA,7305,100
+"prescribedburn_lag0","missing","NA's",NA,7305,100
+"woodsmoke_lag0","missing","NA's",NA,7305,100
+"lfs_pm10_lag0","number","Min.","0",NA,NA
+"","","1st Qu.","0",NA,NA
+"","","Median","0",NA,NA
+"","","Mean","0.028971",NA,NA
+"","","3rd Qu.","0",NA,NA
+"","","Max.","1",NA,NA
+"","","NA's","160",NA,NA
+"lfs_pm25_lag0","number","Min.","0",NA,NA
+"","","1st Qu.","0",NA,NA
+"","","Median","0",NA,NA
+"","","Mean","0.022128",NA,NA
+"","","3rd Qu.","0",NA,NA
+"","","Max.","1",NA,NA
+"","","NA's","1159",NA,NA
+"lfs_pm2599","number","Min.","0",NA,NA
+"","","1st Qu.","0",NA,NA
+"","","Median","0",NA,NA
+"","","Mean","0.0074461",NA,NA
+"","","3rd Qu.","0",NA,NA
+"","","Max.","1",NA,NA
+"","","NA's","993",NA,NA
+"pubhol","missing","NA's",NA,7305,100
+"lfs_99_NA","missing","NA's",NA,7305,100
+"lfs_99","number","Min.","0",NA,NA
+"","","1st Qu.","0",NA,NA
+"","","Median","0",NA,NA
+"","","Mean","0.011873",NA,NA
+"","","3rd Qu.","0",NA,NA
+"","","Max.","1",NA,NA
+"","","NA's","988",NA,NA
+"pm25_lag0","number","Min.","-0.5",NA,NA
+"","","1st Qu.","3.4",NA,NA
+"","","Median","5.3",NA,NA
+"","","Mean","6.2482",NA,NA
+"","","3rd Qu.","7.8",NA,NA
+"","","Max.","168.1",NA,NA
+"","","NA's","976",NA,NA
+"pm10_lag0","number","Min.","2.6",NA,NA
+"","","1st Qu.","12.3",NA,NA
+"","","Median","16.2",NA,NA
+"","","Mean","17.899",NA,NA
+"","","3rd Qu.","20.9",NA,NA
+"","","Max.","1655.5",NA,NA
+"","","NA's","1",NA,NA
+"o3_max","number","Min.","0.3",NA,NA
+"","","1st Qu.","2.4",NA,NA
+"","","Median","2.9",NA,NA
+"","","Mean","3.2086",NA,NA
+"","","3rd Qu.","3.7",NA,NA
+"","","Max.","12",NA,NA
+"temperature","missing","NA's",NA,7305,100
+"humidity","missing","NA's",NA,7305,100
+"protocol_used","character","Johnston2011",NA,4929,67.47
+"","","Satellite Only",NA,2376,32.53

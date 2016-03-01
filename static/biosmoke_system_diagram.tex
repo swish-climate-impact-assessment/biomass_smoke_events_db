@@ -11,6 +11,7 @@
 \usetikzlibrary{decorations.text}
 
 \begin{document}
+\subsection*{Contribution workflow for biomass smoke database}
 
 \begin{tikzpicture} [
             outpt/.style={->,blue!80!black,very thick},
@@ -35,5 +36,22 @@ node (validated) at (8,-8) [draw=black!50,rectangle] {New air pollution data \\ 
 \draw [-latex,color=blue] (local) .. controls +(.5,-1) .. node (w2p)[near end,above right,color=black] {Data entry of references\\+ events} (validated);
 \draw[-latex,color=olive] (validated) .. controls +(8,0) and +(8,-0.5) .. node[near end,above right,color=black] {Email or \\Github pull request} (DM); 
 \end{tikzpicture} 
+
+\clearpage
+\subsection*{Checklist for database manager}
+
+\begin{tikzpicture} [
+            outpt/.style={->,blue!80!black,very thick},
+            >=stealth,
+         every node/.append style={align=center}]
+
+\node (notif) at (0,0) [draw=black!50,rectangle] {Recieve notification}
+node [draw=black!50,rectangle] (storedata) at (0,-2) {Store data}
+;
+
+\draw [-latex] (notif) -- (storedata);
+
+\end{tikzpicture} 
+
 
 \end{document}
