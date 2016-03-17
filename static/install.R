@@ -1,48 +1,68 @@
 
 #### name:install ####
-# download web2py
+"
+if on linux_os I assume you will use this from user_home (~/)
+else assume windows and I assume you will use web2py from C:/Temp
+"
+# function to decide which download of web2py, linux or win
 linux_os <- function(){
-    if(length(grep('linux',sessionInfo()[[1]]$os)) == 1)
-    {
-      #print('Linux')
-      os <- 'linux' 
-      OsLinux <- TRUE
-    }else if (length(grep('ming',sessionInfo()[[1]]$os)) == 1)
-    {
-      #print('Windows')
-      os <- 'windows'
-      OsLinux <- FALSE
-    }else
-    {
-      # don't know, do more tests
-      print('Non linux or windows os detected. Assume linux-alike.')
-      os <- 'linux?'
-      OsLinux <- TRUE
-    }
-   
-    return (OsLinux)
+  if(length(grep('linux',sessionInfo()[[1]]$os)) == 1)
+  {
+    #print('Linux')
+    os <- 'linux'
+    OsLinux <- TRUE
+  }else if (length(grep('ming',sessionInfo()[[1]]$os)) == 1)
+  {
+    #print('Windows')
+    os <- 'windows'
+    OsLinux <- FALSE
+  }else
+  {
+    # don't know, do more tests
+    print('Non linux or windows os detected. Assume linux-alike.')
+    os <- 'linux?'
+    OsLinux <- TRUE
   }
+
+  return (OsLinux)
+}
 if(linux_os()){
-download.file("http://web2py.com/examples/static/web2py_src.zip", 
-              destfile = "~/web2py_src.zip", mode = "wb")
-unzip("~/web2py_src.zip")
+  # I assume you will use this from ~/
+  download.file("http://web2py.com/examples/static/web2py_src.zip",
+                destfile = "~/web2py_src.zip", mode = "wb")
+  unzip("~/web2py_src.zip")
+  setwd("~/web2py/applications/")
 } else {
-download.file("http://web2py.com/examples/static/web2py_win.zip", 
-              destfile = "~/web2py_win.zip", mode = "wb")
-unzip("~/web2py_win.zip")
+  # I assume you will use web2py from the top of C
+  dir.create("C:/Temp",showWarnings = F)
+  download.file("http://web2py.com/examples/static/web2py_win.zip",
+                destfile = "C:/Temp/web2py_win.zip", mode = "wb")
+  setwd("C:/Temp/")
+  unzip("web2py_win.zip")
+  setwd("web2py/applications/")
 }
 
-setwd("~/web2py/applications/")
-downloader::download("https://github.com/swish-climate-impact-assessment/biomass_smoke_events_db/archive/master.zip", 
-         "temp.zip", mode = "wb")
+if(!require(downloader)) install.packages("downloader");
+downloader::download("https://github.com/swish-climate-impact-assessment/biomass_smoke_events_db/archive/master.zip",
+                     "temp.zip", mode = "wb")
 unzip("temp.zip")
 file.rename("biomass_smoke_events_db-master", "biomass_smoke_events_db")
-setwd("~/web2py/")
 #dir()
 
 if(linux_os()){
+  setwd("~/web2py")
   system("python web2py.py -a xpassword -i 0.0.0.0 -p 8181", wait = F)
+  browseURL("http://127.0.0.1:8181/biomass_smoke_events_db")
+
 } else {
-  system("web2py.exe -a xpassword -i 0.0.0.0 -p 8181", wait = F)
-}
+  setwd("C:/Temp/")
+  sink("w2p.cmd")
+cat("cd C:/Temp/web2py\nweb2py.exe -a xpassword -i 0.0.0.0 -p 8181")
+  sink()
+  print(cat('you have a batch file now: C:/Temp/w2p.cmd\n
+run it and then \n
+browseURL("http://127.0.0.1:8181/biomass_smoke_events_db")'))
+# or just try to do it
+shell("w2p.cmd", wait = F)
 browseURL("http://127.0.0.1:8181/biomass_smoke_events_db")
+}
