@@ -45,5 +45,7 @@ It comes originally from the Biomass Smoke and Health Project of:
 - Grant Williamson
 
 
+# Contriubitons
 
+- 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
 
