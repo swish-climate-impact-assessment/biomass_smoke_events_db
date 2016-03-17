@@ -10,6 +10,8 @@ https://github.com/swish-climate-impact-assessment/biomass_smoke_events
 
 # Installation instructions
 
+- There is an experimental install script at this link: [https://github.com/swish-climate-impact-assessment/biomass_smoke_events_db/blob/master/static/install.R](https://github.com/swish-climate-impact-assessment/biomass_smoke_events_db/blob/master/static/install.R)
+- IF that fails follow these instructions
 - Download web2py.  This runs on windows, linux and mac.  It requires no installation
 - Clone or Download this github repo as a zip
 - put the files within this repo into the `applications/biomass_smoke_events` folder of your web2py download 
