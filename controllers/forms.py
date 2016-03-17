@@ -3,7 +3,7 @@ def manage_references():
                                                       ],
                              fields = [db.biomass_smoke_reference.id,
                                        db.biomass_smoke_reference.source,
-                                       db.biomass_smoke_reference.credentials,
+                                       db.biomass_smoke_reference.protocol_used,
                                        db.biomass_smoke_reference.year,
                                        
                                        db.biomass_smoke_reference.title,
