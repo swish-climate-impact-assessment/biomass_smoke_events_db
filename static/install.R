@@ -23,9 +23,6 @@ linux_os <- function(){
     os <- 'linux?'
     OsLinux <- TRUE
   }
-
-  return (OsLinux)
-}
 if(linux_os()){
   # I assume you will use this from ~/
   download.file("http://web2py.com/examples/static/web2py_src.zip",
