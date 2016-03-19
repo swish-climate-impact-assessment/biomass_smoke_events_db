@@ -44,7 +44,7 @@ if(!file.exists("C:/Temp/web2py_win.zip")) download_web2py <- TRUE
   setwd("C:/Temp/")
   unzip("web2py_win.zip")
   }
-  setwd("web2py/applications/")
+  setwd("C:/Temp/web2py/applications/")
 }
 if(file.exists("biomass_smoke_events_db")){
    file.rename("biomass_smoke_events_db",
