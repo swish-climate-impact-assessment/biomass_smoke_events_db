@@ -55,11 +55,10 @@ if(linux_os()){
   setwd("C:/Temp/")
   sink("w2p.cmd")
 cat("cd C:/Temp/web2py\nweb2py.exe -a xpassword -i 0.0.0.0 -p 8181")
+cat("cmd /c start filename_or_URL")  
   sink()
   print(cat('you have a batch file now: C:/Temp/w2p.cmd\n
-run it and then \n
-browseURL("http://127.0.0.1:8181/biomass_smoke_events_db")'))
-# or just try to do it
-shell("w2p.cmd", wait = F)
-browseURL("http://127.0.0.1:8181/biomass_smoke_events_db")
+Double click to run it\n'))
+# or just try to do it from R
+shell("w2p.cmd")
 }
