@@ -24,6 +24,7 @@ linux_os <- function(){
     os <- 'linux?'
     OsLinux <- TRUE
   }
+}
 if(linux_os()){
 if(!file.exists("~/web2py_src.zip")) download_web2py <- TRUE
   if(download_web2py){
@@ -60,14 +61,22 @@ file.rename("biomass_smoke_events_db-master", "biomass_smoke_events_db")
 
 if(linux_os()){
   setwd("~/web2py")
+  sink("w2p.py")
+cat("python web2py.py -a xpassword -i 0.0.0.0 -p 8181")
+cat("firefox http://127.0.0.1:8181/biomass_smoke_events_db")  
+  sink()
+  print(cat('you have a go script in ~/web2py/w2p.py\n
+bash it to run it\n'))
+# or just try to do it from R
   system("python web2py.py -a xpassword -i 0.0.0.0 -p 8181", wait = F)
   browseURL("http://127.0.0.1:8181/biomass_smoke_events_db")
 
 } else {
   setwd("C:/Temp/")
   sink("w2p.cmd")
-cat("cd C:/Temp/web2py\nweb2py.exe -a xpassword -i 0.0.0.0 -p 8181")
-cat("cmd /c start filename_or_URL")  
+cat("cd C:/Temp/web2py\n")
+cat("start web2py.exe -a xpassword -i 0.0.0.0 -p 8181\n")
+cat("cmd /c start http://127.0.0.1:8181/biomass_smoke_events_db")  
   sink()
   print(cat('you have a batch file now: C:/Temp/w2p.cmd\n
 Double click to run it\n'))
