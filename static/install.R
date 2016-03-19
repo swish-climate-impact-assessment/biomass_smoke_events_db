@@ -4,6 +4,7 @@
 if on linux_os I assume you will use this from user_home (~/)
 else assume windows and I assume you will use web2py from C:/Temp
 "
+download_web2py <- FALSE
 # function to decide which download of web2py, linux or win
 linux_os <- function(){
   if(length(grep('linux',sessionInfo()[[1]]$os)) == 1)
@@ -24,19 +25,30 @@ linux_os <- function(){
     OsLinux <- TRUE
   }
 if(linux_os()){
+if(!file.exists("~/web2py_src.zip")) download_web2py <- TRUE
+  if(download_web2py){
   # I assume you will use this from ~/
   download.file("http://web2py.com/examples/static/web2py_src.zip",
                 destfile = "~/web2py_src.zip", mode = "wb")
   unzip("~/web2py_src.zip")
+  }
   setwd("~/web2py/applications/")
 } else {
+if(!file.exists("C:/Temp/web2py_win.zip")) download_web2py <- TRUE
+  if(download_web2py){
   # I assume you will use web2py from the top of C
   dir.create("C:/Temp",showWarnings = F)
   download.file("http://web2py.com/examples/static/web2py_win.zip",
                 destfile = "C:/Temp/web2py_win.zip", mode = "wb")
   setwd("C:/Temp/")
   unzip("web2py_win.zip")
+  }
   setwd("web2py/applications/")
+}
+if(file.exists("biomass_smoke_events_db")){
+   file.rename("biomass_smoke_events_db",
+               sprintf("biomass_smoke_events_db_%s",make.names(Sys.time()))
+               )    
 }
 
 if(!require(downloader)) install.packages("downloader");
