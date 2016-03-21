@@ -62,7 +62,7 @@ file.rename("biomass_smoke_events_db-master", "biomass_smoke_events_db")
 if(linux_os()){
   setwd("~/web2py")
   sink("w2p.py")
-cat("python web2py.py -a xpassword -i 0.0.0.0 -p 8181")
+cat("python web2py.py -a xpassword -i 0.0.0.0 -p 8181\n")
 cat("firefox http://127.0.0.1:8181/biomass_smoke_events_db")  
   sink()
   print(cat('you have a go script in ~/web2py/w2p.py\n
