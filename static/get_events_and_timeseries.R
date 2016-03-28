@@ -1,5 +1,5 @@
 
-library(RSQLite)
+library(RSQLite) 
 drv <- dbDriver("SQLite")
 ch <- dbConnect(drv, dbname = "~/web2py/applications/biomass_smoke_events_db/databases/storage.sqlite")
 qc  <- dbGetQuery(ch , "select * from biomass_smoke_reference")
