@@ -8,3 +8,57 @@
 
 * TODO-List
 ** TODO this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
+** TODO the URL for install.R (also this is security risk)
+** TODO make protocol landing page invite users to 
+a) Johnston, b) Farhad, c) bare minimun and d) suggest their own
+bare min is just
+step 1 get any reference
+step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
+step 3 go to web2py data entry form 
+** TODO make downloaded version not require log in
+** TODO decommission ANU site, make all references to the github, make landing page that says go to github
+** TODO landing page "to enter new data go and register in top right"  remove email ivan.
+this becomes dot 5, dot 4 becomes manuscript flesh out dot 
+say step 1 register
+step 2 add a reference [at this link]
+step 3 add dates [at this link]
+
+** TODO add a reference
+source is compulsory, authors is optional
+title compulsory
+volume optional
+general location means geographical location? optional? remove this.
+Desirable URL (e.g. doi or weblink of any kind and date accessed)
+  also you might want to add the folder location on your computer and the file name
+optional summary (this is what you think of it)
+optional abstract (this is the author thought of it)
+spell it out somewhere that you can sort descending by clicking ID (twice)
+then the 'biomass smoke events' link is where to go to Add an Event.
+
+Adding events
+TODO how to add a new place?
+- place add an Other option
+- then under that is a free text place.
+
+min date, start date?
+max date, end date?
+no this is ok
+
+make it clear what is compulsory
+
+final step is to email Ivan.
+and if not that is fine but the expectation is to cite the data (the github)
+
+** TODO C:/Temp is temporary, suggest the user move these before they start.
+instruction to go into project folder and double click the w2p.cmd
+you can go to events page, at bottom export to csv
+last step go to github, either submit pull request or see Ivan's current email address, send him a zipped version of the web2py folder along with any supporting data or other material
+
+** TODO the github landing page needs edit
+
+
+
+
+
+
+
