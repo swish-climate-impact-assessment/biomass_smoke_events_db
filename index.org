@@ -56,9 +56,23 @@ last step go to github, either submit pull request or see Ivan's current email a
 
 ** TODO the github landing page needs edit
 ** TODO add DMJS Bowman as author
+** TODO affiliations
+Postdoctoral research fellow
+University Centre for Rural Health,
+Sydney Medical School,
+University of Sydney, Sydney, NSW, Australia
+
+And
+
+Data Scientist
+Spatial Epidemiology Group,
+Centre for Research and Action in Public Health,
+Health Research Institute,
+University of Canberra, Canberra, ACT, Australia
+
 * manuscript
-** TODO go manuscript run-able R
-#+begin_src R :session *R* :tangle static/go_manuscript.R :exports none :padline no :eval yes 
+** go manuscript run-able R
+#+begin_src R :session *R* :tangle static/manuscript/go_manuscript.R :exports none :padline no :eval yes 
   setwd("/home/ivan_hanigan/tools/web2py/applications/biomass_smoke_events_db/static/manuscript")
   library(knitr)
   library(knitcitations)
@@ -71,38 +85,41 @@ last step go to github, either submit pull request or see Ivan's current email a
 #+end_src
 
 #+RESULTS:
-=TRUE
-=** schematic
+: TRUE
+
+** schematic
 - tex 
 - then 
 cd ~/tools/web2py/applications/biomass_smoke_events_db/static/manuscript
 convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
 
-
-
 ** headers
+
 *** header-manuscript bookdown
-  bibliography: /home/ivan_hanigan/references/library.bib
 # +HEADERS: :tangle  AirPollutionNeighbourhoodExposures/report/BME_manuscript.Rmd :padline yes
 # +BEGIN_SRC markdown
 #+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline no
   ---
   title: "Extensible database of validated biomass smoke events for health research"
-  author: 
-  - name: Ivan C. Hanigan*, NHMRC Centre for Air quality and health Research and evaluation (CAR), Woolcock Institute of Medical Research Sydney, Australia, University of Canberra, Canberra, Australia & University of Sydney, Sydney, Australia
-  - name: Grant J. Williamson, NHMRC Centre for Air quality and health Research and evaluation (CAR), Woolcock Institute of Medical Research Sydney, Australia & University of Tasmania, Hobart, Australia
+  author:
+  - name: Ivan C. Hanigan,  University of Canberra and University of Sydney, Australia, (Ivan.Hanigan@canberra.edu.au)
+  - name: Fay H. Johnston,  University of Tasmania, (Fay.Johnston@utas.edu.au)
+  - name: Geoffery G. Morgan,  University of Sydney, (geoffrey.morgan@sydney.edu.au)
+  - name: Grant J. Williamson,  University of Tasmania, (grant.williamson@utas.edu.au)
+  - name: Farhad Salimi,  University of Sydney, (Farhad.Salimi@utas.edu.au)
+  - name: Sarah B.Henderson,  University of British Columbia, (sarah.henderson@ubc.ca)
+  - name: Murray Turner,  University of Canberra, (Murray.Turner@canberra.edu.au)
+  - name: David M. J. S.Bowman,  University of Tasmania, (david.bowman@utas.edu.au)
   site: bookdown::bookdown_site
   output: bookdown::gitbook
   csl: components/meemodified.csl
   keywords: "Bushfires, Dust storms"
   date:  "Draft `r format(Sys.time(), '%B %d, %Y')`"  
+  bibliography: /home/ivan_hanigan/references/library.bib
   ---
-  
-  
-    
+        
 #+end_src  
-
-*** manuscript text
+*** abstract
 #+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline no
   
   _Abstract_
@@ -146,6 +163,9 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   ommision or error in these data they can offer an amendment. We believe
   that this will improve the database and benefit the whole biomass smoke
   health research community.
+#+end_src  
+*** background, epi context
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
   
   # Background  
   ## Epidemiological studies of outdoor air pollution
@@ -158,13 +178,13 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   Dockery 2006). Far fewer studies have examined the effect of
   intermittent smoke from biomass burning, such as that which occurs in
   bushfires, or from woodsmoke trapped by inversion layers during winter
-  months as wood is burned for heating (Naeher \emph{et al.} 2007).
+  months as wood is burned for heating [@Naeher2007].
   
   There is a gap in the epidemiological literature of health effects from
   ambient outdoor air pollution relating to smoke from biomass burning
   such as that from bushfires or woodsmoke from heating. Most literature
   available that focuses on biomass smoke health impacts looks at indoor
-  pollution from cooking (Smith 1993). Particles (and perhaps noxious
+  pollution from cooking [@Smith1993]. Particles (and perhaps noxious
   gases) in outdoor pollution from biomass smoke might directly influence
   the respiratory system through their inhalation and lodgement in the
   lungs. Particles may then affect the cardiovascular system after their
@@ -174,7 +194,7 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   Epidemiological studies that investigate the relationship between health
   and air pollution exposures have primarily used time-series methods that
   study variations of some health outcomes such as deaths or
-  hospitalisations from specific disease groups (Peng \& Dominici 2008).
+  hospitalisations from specific disease groups [@Peng2008a].
   These outcomes are usually monitored by day across whole cities, and
   relationships with atmospheric variables estimated in regression models.
   These typically focus on daily levels of ambient air pollution measured
@@ -193,6 +213,9 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   validate the dates on which events are ascribed in any correlational
   study of pollution spikes and health that claims the high levels are due
   to biomass smoke.
+#+end_src  
+*** dev db
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
       
   # The development of this biomass smoke events database
   
@@ -201,7 +224,7 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   evaluate whether they were caused by vegetation fire smoke or by other
   means. A summary of the protocol for developing this database and a
   summary of the data we collated is published already as a descriptive
-  paper (Johnston \emph{et al.} 2011). This paper describes how the
+  paper [@Johnston2011a]. This paper describes how the
   database has been extended to be able to be distributed in an open,
   extensible format that allows the research community to add to the
   history of these events.
@@ -222,7 +245,7 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   Contributers may download that version and use it as a local database.
   The R package is also available on Github, and contains functions that
   may be used to impute any missing data gaps using the APHEA procedure
-  (Katsouyanni \emph{et al.} 1996) as per the study protocol. The
+  [@Katsouyanni1996] as per the study protocol. The
   contributer needs to have new air pollution data available, and access
   to the required reference materials for validation. The R package is
   used to compute the quantiles of the new extended time-series of imputed
@@ -235,12 +258,15 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   the new data to the online database. The procedure then starts again and
   a new version is loaded into the Github repository with descriptions of
   the additional changes that have been incorporated.
+#+end_src  
+*** protocols
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
   
   ## General overview of protocols
   
   For each location in the original study there were up to 13 years
   (between 1994 and 2007) of daily air quality data measured as
-  Particulate Matter (PM) less than 10um (\(PM_{10}\)) or less than 2.5
+  Particulate Matter (PM) less than 10 \(\mu\)m (\(PM_{10}\)) or less than 2.5
   \(\mu\)m (\(PM_{2.5}\)) in aerodynamic diameter were examined. Air
   pollution data were provided by government agencies in the states of
   Western Australia, New South Wales, and Tasmania. Daily averages for
@@ -250,7 +276,7 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   concentrations were imputed using available data from other proximate
   monitoring sites in the network. The daily city-wide PM concentrations
   were then estimated following the protocol of the Air Pollution and
-  Health: a European Approach studies (Atkinson \emph{et al.} 2001).
+  Health: a European Approach studies [@Atkinson2001].
   
   First a 'filling-in' procedure was used to improve data completeness. It
   entailed the substitution of the missing daily values with a weighted
@@ -260,7 +286,7 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   measures from all stations providing data were then averaged to provide
   single, city-wide estimates of the daily levels of the pollutants
   
-  For each city, all days in which PM10 or PM2.5 exceeded the 95th
+  For each city, all days in which \(PM_{10}\) or \(PM_{2.5}\) exceeded the 95th
   percentile were identified over the entire time series. These extreme
   values were termed 'events'. A range of sources was ex- amined to
   identify the cause of particulate air pollution events, including
@@ -269,6 +295,9 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   database. Also examined were remotely sensed aerosol optical thickness
   (AOT) data to provide further information about days for which the other
   methods did not.
+#+end_src  
+*** data prep
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
   
   # Detailed data preparation and validation methods
   
@@ -282,7 +311,7 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   
   Step 1.2. WA data sent on CD from contacts at the WA Government
   Department, these were hourly data as provided. Cleaned so as only days
-  with \textgreater{}75\% of hours are used. Licence puts restricions on
+  with > 75\% of hours are used. Licence puts restricions on
   our right to provide to a third party. Therefore those observed and
   imputed data are not included, only the events.
   
@@ -315,7 +344,7 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   available data from other proximate monitoring sites in the network. The
   daily city-wide PM concentrations were then estimated following the
   protocol of the Air Pollution and Health: a European Approach studies
-  (Katsouyanni \emph{et al.} 1996).
+  [@Katsouyanni1996].
   
   Step 3.1. Prepare Data. First it was necessary to find the minimum date
   that the series of continuous observations can be considered to start.
@@ -361,51 +390,35 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   
   ## Step 5. Insert contributed pollution and validated events, and downstream dissemination
   
-  
-  \begin{itemize}
-  \tightlist
-  \item
-    To close the loop the data are then inserted back into the DB.
-  \end{itemize}
+  To close the loop the data are then inserted back into the DB.
+
+#+end_src  
+*** availability
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
   
   # Availability and requirements
   
-  Lists the following:
+  - Project name: BiosmokeValidatedEvents
+  - Project home page: https://swish-climate-impact-assessment.github.io/BiosmokeValidatedEvents/
+  - Operating system(s): R package is platform independent. Data Entry forms are Web2py.
+  - Programming language: R and SQL
+  - Recommended: PostgreSQL (PostGIS is desirable)
+  - License: CC BY 4.0
+  - Any restrictions to use: amendments of errors of ommision or commission are invited but will be vetted before insertion into the master database.
   
-  \begin{itemize}
-  \tightlist
-  \item
-    Project name: BiosmokeValidatedEvents
-  \item
-    Project home page:
-    \url{http://swish-climate-impact-assessment.github.io/BiosmokeValidatedEvents/}
-  \item
-    Operating system(s): R package is platform independent. Data Entry
-    forms are Microsoft Windows.
-  \item
-    Programming language: R and SQL
-  \item
-    Other requirements: PostgreSQL (PostGIS is desirable)
-  \item
-    License: CC BY 4.0
-  \item
-    Any restrictions to use: amendments of errors of ommision or
-    commission are invited but will be vetted before insertion into the
-    master database.
-  \end{itemize}
   
   ## Availability of supporting data
   
   ### Air pollution data provided
   
   The NSW Air pollution data are available to download from
-  \url{http://www.environment.nsw.gov.au/AQMS/search.htm}
+  http://www.environment.nsw.gov.au/AQMS/search.htm
   
   ### Data derived
   
   The data set supporting the results of this article are available in the
   repository from the website
-  \url{http://swish-climate-impact-assessment.github.io/biomass_smoke_events_db}
+  https://swish-climate-impact-assessment.github.io/biomass_smoke_events_db
   
   We have applied the license under Creative Commons - Attribution 4.0.
   This allows others to copy, distribute and create derivative works
@@ -413,10 +426,11 @@ convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
   
   Users should cite the Johnston 2011 Journal of the Air \& Waste
   Management Association as the validation protocol and the Database
-  itself as: Hanigan, IC., Johnston, FH., Morgan, GG., and
-  contributers{[}*{]}. (2015). The Validated Bushfire Smoke Events
-  Database.
-  \url{https://gislibrary-extreme-weather.anu.edu.au/biomass_smoke_events}
+  itself as: TBC
+
+#+end_src  
+*** refs
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
   
   # References
   
