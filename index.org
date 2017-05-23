@@ -7,4 +7,419 @@
 -----
 
 * TODO-List
-** TODO this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
+** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
+** TODO the URL for install.R (also this is security risk)
+** TODO make protocol landing page invite users to 
+a) Johnston, b) Farhad, c) bare minimun and d) suggest their own
+bare min is just
+step 1 get any reference
+step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
+step 3 go to web2py data entry form 
+** TODO make downloaded version not require log in
+** TODO decommission ANU site, make all references to the github, make landing page that says go to github
+** TODO landing DB page "to enter new data go and register in top right"  remove email ivan.
+this becomes dot 5, dot 4 becomes manuscript flesh out dot 
+say step 1 register
+step 2 add a reference [at this link]
+step 3 add dates [at this link]
+
+** TODO add a reference
+source is compulsory, authors is optional
+title compulsory
+volume optional
+general location means geographical location? optional? remove this.
+Desirable URL (e.g. doi or weblink of any kind and date accessed)
+  also you might want to add the folder location on your computer and the file name
+optional summary (this is what you think of it)
+optional abstract (this is the author thought of it)
+spell it out somewhere that you can sort descending by clicking ID (twice)
+then the 'biomass smoke events' link is where to go to Add an Event.
+
+Adding events
+TODO how to add a new place?
+- place add an Other option
+- then under that is a free text place.
+
+min date, start date?
+max date, end date?
+no this is ok
+
+make it clear what is compulsory
+
+final step is to email Ivan.
+and if not that is fine but the expectation is to cite the data (the github)
+
+** TODO C:/Temp is temporary, suggest the user move these before they start.
+instruction to go into project folder and double click the w2p.cmd
+you can go to events page, at bottom export to csv
+last step go to github, either submit pull request or see Ivan's current email address, send him a zipped version of the web2py folder along with any supporting data or other material
+
+** TODO the github landing page is source code, gh-pages needs edit or removal
+** TODO add DMJS Bowman as author
+** TODO affiliations
+Postdoctoral research fellow
+University Centre for Rural Health,
+Sydney Medical School,
+University of Sydney, Sydney, NSW, Australia
+
+And
+
+Data Scientist
+Spatial Epidemiology Group,
+Centre for Research and Action in Public Health,
+Health Research Institute,
+University of Canberra, Canberra, ACT, Australia
+
+* manuscript
+** go manuscript run-able R
+#+begin_src R :session *R* :tangle static/manuscript/go_manuscript.R :exports none :padline no :eval yes 
+  setwd("/home/ivan_hanigan/tools/web2py/applications/biomass_smoke_events_db/static/manuscript")
+  library(knitr)
+  library(knitcitations)
+  library(rmarkdown)
+  bookdown::render_book("index.Rmd", output_dir = "_book",
+                        output_format = bookdown::html_chapters(split_by = "none"))
+  file.rename("_main.html", "_book/main.html")
+  browseURL("_book/main.html")
+  #setwd("../..")
+#+end_src
+
+#+RESULTS:
+: 0
+
+** schematic
+- tex 
+- then 
+cd ~/tools/web2py/applications/biomass_smoke_events_db/static/manuscript
+convert -density 300  biosmoke_system_diagram.pdf biosmoke_system_diagram.png
+
+** headers
+
+*** header-manuscript bookdown
+# +HEADERS: :tangle  AirPollutionNeighbourhoodExposures/report/BME_manuscript.Rmd :padline yes
+# +BEGIN_SRC markdown
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline no
+  ---
+  title: "Extensible database of validated biomass smoke events for health research"
+  author:
+  - name: Ivan C. Hanigan,  University of Canberra and University of Sydney, Australia, (Ivan.Hanigan@canberra.edu.au)
+  - name: Fay H. Johnston,  University of Tasmania, (Fay.Johnston@utas.edu.au)
+  - name: Geoffery G. Morgan,  University of Sydney, (geoffrey.morgan@sydney.edu.au)
+  - name: Grant J. Williamson,  University of Tasmania, (grant.williamson@utas.edu.au)
+  - name: Farhad Salimi,  University of Sydney, (Farhad.Salimi@utas.edu.au)
+  - name: Sarah B.Henderson,  University of British Columbia, (sarah.henderson@ubc.ca)
+  - name: Murray Turner,  University of Canberra, (Murray.Turner@canberra.edu.au)
+  - name: David M. J. S. Bowman,  University of Tasmania, (david.bowman@utas.edu.au)
+  site: bookdown::bookdown_site
+  output: bookdown::gitbook
+  csl: components/meemodified.csl
+  keywords: "Bushfires, Dust storms"
+  date:  "Draft `r format(Sys.time(), '%B %d, %Y')`"  
+  bibliography: /home/ivan_hanigan/references/library.bib
+  ---
+        
+#+end_src  
+*** abstract
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline no
+  
+  _Abstract_ (291/300 words)
+  
+  ,**Objective**: The Biomass Smoke Validated Events  Database is an open and extensible data collection recording historical  spikes in air pollution and validation of whether they were caused by  biomass smoke (e.g. from burning vegetation or forest fires). The project  seeks to enhance the discoverability of this data collection and  provides researchers with tools that allow them to add new data, or to use the existing data to study new statistical associations between pollution spikes and health outcomes around those days.
+  
+  ,**Background**: Epidemiological studies of the health  effects of biomass smoke events have been hindered by the lack of  available datasets that explicitly list the locations and dates of  pollution events from these sources. Extreme air pollution events may  also be caused by dust storms, fossil fuel induced smog events or  factory fires, and so validation is necessary to ensure the events are  from biomass sources. 
+  
+  ,**Methods**: Several major urban centers and smaller  regional towns in the Australian states of New South Wales, Western  Australia, and Tasmania were selected as they are intermittently  affected by extreme episodes of biomass smoke. Air pollution  data was collated and missing values were imputed. Extreme values were  identified and a range of sources of reference information were assessed  for each date. Reference types included online newspaper archives,  government and research agency records, satellite imagery and a Dust  Storms database.
+  
+  ,**Results**: This dataset contains validated events of  extreme biomass smoke pollution across Australian cities. The authors  have previously demonstrated the utility of this database in analyses of  hospital admissions and mortality data for these locations to quantify  the pollution-related health effects of these events.
+  
+  ,**Conclusions**: The database was created using open source software and this makes the prospect for future extensions to the  database possible. 
+#+end_src  
+*** abs snip
+The ability for this database to be extended by  other researchers means that new events can be added, and new  information for already identified events can be described. These  methods provide a systematic framework for retrospective identification  of the air quality impacts of biomass smoke. In this paper, we describe  the database and data aquisition methods, as well as analytical  considerations when validating historical events using a range of  reference types.
+
+This is because if other scientists notice an  ommision or error in these data they can offer an amendment. 
+
+We believe  that this will improve the database and benefit the whole biomass smoke  health research community.
+*** background, epi context
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
+  
+  # Background  
+  ## Epidemiological studies of outdoor air pollution
+  
+  
+  For decades, researchers have studied the public health impacts of
+  ambient outdoor air pollution, particularly from the effects of
+  particulate and gaseous pollutants, especially associated with the
+  combustion of coal, petroleum and biomass used for cooking (Pope \&
+  Dockery 2006). Far fewer studies have examined the effect of
+  intermittent smoke from biomass burning, such as that which occurs in
+  bushfires, or from woodsmoke trapped by inversion layers during winter
+  months as wood is burned for heating [@Naeher2007].
+  
+  There is a gap in the epidemiological literature of health effects from
+  ambient outdoor air pollution relating to smoke from biomass burning
+  such as that from bushfires or woodsmoke from heating. Most literature
+  available that focuses on biomass smoke health impacts looks at indoor
+  pollution from cooking [@Smith1993]. Particles (and perhaps noxious
+  gases) in outdoor pollution from biomass smoke might directly influence
+  the respiratory system through their inhalation and lodgement in the
+  lungs. Particles may then affect the cardiovascular system after their
+  entry into the circulatory system from the alveolae. Indirect effects on
+  mental health and wellbeing are also plausible.
+  
+  Epidemiological studies that investigate the relationship between health
+  and air pollution exposures have primarily used time-series methods that
+  study variations of some health outcomes such as deaths or
+  hospitalisations from specific disease groups [@Peng2008a].
+  These outcomes are usually monitored by day across whole cities, and
+  relationships with atmospheric variables estimated in regression models.
+  These typically focus on daily levels of ambient air pollution measured
+  by a network of monitoring sites scattered across a city, time matched
+  to the health outcomes on the same day or a few days after. In general
+  biomass smoke forms only a small part of the mixture of pollutants in
+  the air, however when a bushfire or inversion layer event occurs there
+  is often a concomitant spike in the pollution levels primarily composed
+  of biomass smoke. There is then the ability to study statistical
+  associations between these pollution spikes and the health outcomes
+  around those days. Anomalous levels of pollution can be arbitrarily
+  defined using a threshold such as the 95th percentile and these might be
+  assumed to be biomass smoke days, however there are other events that
+  might cause such as spike such as dust storms, factory fires or even sea
+  salt being driven by certain wind events. There is a need then to
+  validate the dates on which events are ascribed in any correlational
+  study of pollution spikes and health that claims the high levels are due
+  to biomass smoke.
+#+end_src  
+*** protocols
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
+  
+  ## General overview of protocols
+  
+  ### The Johnston Protocol  
+  The Johnston Protocol was the first method our team developed for this project and was published as a peer reviewed journal article in 2011 [@Johnston2011a]. This protocol is considered the most conceptually appealing and rigorous method.  In this protocol, for each location the longest available time-series of daily smoke air pollution is acquired.  In our original study there were up to 13 years
+  (between 1994 and 2007) of daily air quality data measured as
+  Particulate Matter (PM) less than 10 \(\mu\)m (\(PM_{10}\)) or less than 2.5
+  \(\mu\)m (\(PM_{2.5}\)) in aerodynamic diameter were examined. Air
+  pollution data were provided by government agencies in the states of
+  Western Australia, New South Wales, and Tasmania. Daily averages for
+  each site were calculated excluding days with less than 75\% of hourly
+  measurements. In Sydney and Perth, where data were collected from
+  several monitoring stations, the missing daily site-specific PM
+  concentrations were imputed using available data from other proximate
+  monitoring sites in the network. The daily city-wide PM concentrations
+  were then estimated following the protocol of the Air Pollution and
+  Health: a European Approach studies [@Atkinson2001].
+  
+  First a 'filling-in' procedure was used to improve data completeness. It
+  entailed the substitution of the missing daily values with a weighted
+  average, using the weights of the missing sites 3-month average
+  proportional to the network average. The weights are calculated against
+  the values from the rest of the monitoring stations. The pollutant
+  measures from all stations providing data were then averaged to provide
+  single, city-wide estimates of the daily levels of the pollutants
+  
+  For each city, all days in which \(PM_{10}\) or \(PM_{2.5}\) exceeded the 95th
+  percentile were identified over the entire time series. These extreme
+  values were termed 'events'. A range of sources was examined to
+  identify the cause of particulate air pollution events, including
+  online news archives, Internet searches for other reports,
+  government and research agencies, satellite imagery and a Dust Storms
+  database. Satellite images were mostly sourced from XXX, but remotely sensed aerosol optical thickness (AOT) data were also examined, to provide further information about days for which the other
+  methods did not.
+
+  ### The Salimi Protocol
+  In 2016 one of us (FS) extended the biomass smoke database for Sydney.  That project developed a refinement of the Johnston Protocol in which only satellite images were used, not review of other reference material.  In the Salimi protocol the air pollution data is processed in the same way.
+
+
+  ### The Bare Minimum Protocol
+
+  TBC
+
+#+end_src  
+*** dev db
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
+      
+  # The development of this biomass smoke events database
+  
+  This open and extensible database was developed by the authors to
+  identify historical spikes in particulate matter concentrations and to
+  evaluate whether they were caused by vegetation fire smoke or by other
+  means. A summary of the protocol for developing this database and a
+  summary of the data we collated is published already as a descriptive
+  paper [@Johnston2011a]. This paper describes how the
+  database has been extended to be able to be distributed in an open,
+  extensible format that allows the research community to add to the
+  history of these events.
+  
+  ## System design
+  
+  ```{r, Schematic, fig.cap = "Schematic diagram of the online database and offline processes for extending the database", echo = F}
+  include_graphics("biosmoke_system_diagram.png")
+  ```
+  
+  The system is described in Figure \@ref(fig:Schematic). The procedure
+  starts with the master copy of the database that is maintained by
+  the Data Manager (DM) in our group. The DM extracts a snapshot of the
+  database (with a specific version identifier from the Git version
+  control system) and makes a 'standalone' version available on Github.
+  This standalone version uses web2py so that it is capable of being
+  downloaded and run on any operating system used by other computers.
+  Contributers may download that version and use it as a local database.
+
+  If following the Johnston Protocol, the
+  contributer needs to have daily air pollution data available, and access
+  to the required reference materials for validation (e.g. satellite images, newspaper archives, the dust event database). If the user follows the Salimi Protocol they only require daily air pollution and satellite images.  If they are following the Bare Minimum Protocol then they only require the validation reference document.
+
+  The R package is also available on Github, and contains functions that
+  may be used to impute any missing data gaps using the procedure
+  as per the APHEA2 study protocol [@Katsouyanni1996]. The R package is
+  used by the Johnston and Salimi Protocols to compute the quantiles of the new extended time-series of imputed   pollution data, to identify events above the 95th percentile threshold
+  that has been set to define 'extreme events'. 
+
+  The contributer uses the
+  web2py data entry forms to add the information that is used to meet the
+  validation criteria. Once they complete their review of all events they
+  notify the DM either with email or by using the Github 'pull request'
+  feature. The DM performs Quality Control (QC) checks and then uploads
+  the new data to the online database. The procedure then starts again and
+  a new version is loaded into the Github repository with descriptions of
+  the additional changes that have been incorporated.
+#+end_src  
+*** data prep
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
+  
+  # Detailed data preparation and validation methods
+  
+  ## Step 1: Source air pollution data
+  
+  Step 1.0 Source air pollution data. Both time series observations and
+  spatial data regarding site locations.
+  
+  Step 1.1. NSW data downloaded from an online data server. Site locations
+  (Lat and Long) obtained from website.
+  
+  Step 1.2. WA data sent on CD from contacts at the WA Government
+  Department, these were hourly data as provided. Cleaned so as only days
+  with > 75\% of hours are used. Licence puts restricions on
+  our right to provide to a third party. Therefore those observed and
+  imputed data are not included, only the events.
+  
+  Step 1.3. Tasmanian data sent via email from contact at the Department,
+  these were daily data.
+  
+  Step 1.4. All data combined and Quality Control checked in the PostGIS
+  database.
+  
+  ## Step 2. Define spatial extent for cities
+  
+  The cities and towns were selected based on the aims of the health study
+  to investigate Cardio-respiratory disease and air pollution from biomass
+  smoke events. These were Albany, Albury, Armidale, Bathurst, Bunbury,
+  Busselton, Geraldton, Gosford-Wyong, Hobart, Illawarra, Launceston,
+  Newcastle, Perth, Sydney, Tamworth and Wagga Wagga.
+  
+  The spatial extent of each city and town was devised by intersecting
+  Australian Bureau of Statistics Statistical Local Areas (SLAs) from the
+  various Census editions. These boundaries were set so give the best
+  possible representation of hospital admissions from the population.
+  
+  Air pollution monitoring sites were then selected on the basis of their
+  proximity to these populations.
+  
+  ## Step 3. Imputation to fill in gaps in the time-series and calculate a network average
+  
+  In cities where data were collected from several monitoring stations,
+  the missing daily site-specific PM concentrations were imputed using
+  available data from other proximate monitoring sites in the network. The
+  daily city-wide PM concentrations were then estimated following the
+  protocol of the Air Pollution and Health: a European Approach studies
+  [@Katsouyanni1996].
+  
+  Step 3.1. Prepare Data. First it was necessary to find the minimum date
+  that the series of continuous observations can be considered to start.
+  In the Australian datasets the initial observations could not be used
+  because the were sometimes only one day per week, only during a
+  particular season or of poor quality due to teething problems with
+  equipment and procedures. Then it was necessary to identify missing
+  dates. Get a list of the sites to include -- that is with more than 70\%
+  observed over the time period (as defined after assessing min and max
+  dates of period).
+  
+  Step 3.2. Loop over each station individually and calculate a daily
+  network average of all the other non-missing sites (ie an average of all
+  stations except the focal station of that iteration in the loop).
+  
+  Step 3.3. Calculate three monthly seasonal mean of these non-missing
+  stations. Calculate a three-month seasonal mean for MISSING site.
+  Estimate missing days at missing sites. The missing value was replaced
+  by the mean level of the remaining stations, multiplied by a factor
+  equal to the ratio of the seasonal (centred three month) mean for the
+  missing station, over the corresponding mean from the stations available
+  on that particular day.
+  
+  Step 3.4. Join all sites for city wide averages and fill any missing
+  days at the site-level with average of the days immediately before and
+  after the missing days (only when this is below a threshold).
+  
+  Step 3.5 Take the average of all sites per day for city wide averages.
+  
+  Step 3.6. Fill any missing days at the city-wide level with the average
+  of before and after (if this is less than 5\% of days).
+  
+  ## Step 4. Validate events and identify the causes
+  
+  Select any dates with PM10 or PM2.5 greater than 95 percentile.
+  Manually validate events using the selected Protocol (or potentially some other approach the user defines). Enter the information for each event into the
+  custom built data entry forms. For any events with references for
+  multiple types of source, assess the liklihood of any single source
+  being the dominant source. Double check any remaining 99th percentile
+  dates with no references.
+  
+  ## Step 5. Insert contributed pollution and validated events, and downstream dissemination
+  
+  To close the loop the data are then inserted back into the DB.
+
+#+end_src  
+*** availability
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
+  
+  # Availability and requirements
+  
+  - Project name: BiosmokeValidatedEvents
+  - Project home page: https://swish-climate-impact-assessment.github.io/BiosmokeValidatedEvents/
+  - Operating system(s): R package is platform independent. Data Entry forms are Web2py.
+  - Programming language: R and SQL
+  - Recommended: PostgreSQL (PostGIS is desirable)
+  - License: CC BY 4.0
+  - Any restrictions to use: amendments of errors of ommision or commission are invited but will be vetted before insertion into the master database.
+  
+  
+  ## Availability of supporting data
+  
+  ### Air pollution data provided
+  
+  The NSW Air pollution data are available to download from
+  http://www.environment.nsw.gov.au/AQMS/search.htm
+  
+  ### Data derived
+  
+  The data set supporting the results of this article are available in the
+  repository from the website
+  https://swish-climate-impact-assessment.github.io/biomass_smoke_events_db
+  
+  We have applied the license under Creative Commons - Attribution 4.0.
+  This allows others to copy, distribute and create derivative works
+  provided that they credit the original source.
+  
+  Users should cite the Johnston 2011 Journal of the Air \& Waste
+  Management Association as the validation protocol and the Database
+  itself as: TBC
+
+#+end_src  
+*** refs
+#+begin_src R :session *R* :tangle static/manuscript/index.Rmd :exports none :eval no :padline yes
+  
+  # References
+  
+    
+#+end_src
