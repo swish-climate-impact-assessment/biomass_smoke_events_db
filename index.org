@@ -17,7 +17,7 @@ step 2 get as much bibliographical as possible e.g. author, title, publisher, ye
 step 3 go to web2py data entry form 
 ** TODO make downloaded version not require log in
 ** TODO decommission ANU site, make all references to the github, make landing page that says go to github
-** TODO landing page "to enter new data go and register in top right"  remove email ivan.
+** TODO landing DB page "to enter new data go and register in top right"  remove email ivan.
 this becomes dot 5, dot 4 becomes manuscript flesh out dot 
 say step 1 register
 step 2 add a reference [at this link]
@@ -54,7 +54,7 @@ instruction to go into project folder and double click the w2p.cmd
 you can go to events page, at bottom export to csv
 last step go to github, either submit pull request or see Ivan's current email address, send him a zipped version of the web2py folder along with any supporting data or other material
 
-** TODO the github landing page needs edit
+** TODO the github landing page is source code, gh-pages needs edit or removal
 ** TODO add DMJS Bowman as author
 ** TODO affiliations
 Postdoctoral research fellow
