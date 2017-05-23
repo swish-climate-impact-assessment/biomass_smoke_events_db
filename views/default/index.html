@@ -8,15 +8,21 @@
     <h4>{{=T('Instructions')}}</h4>
 <ol>
       <li>{{=T('You are using the events database')}}</li>
-  <li>{{=XML(T('The list of validated events is at %s',
+      <li>{{=XML(T('The list of validated events is at %s',
                A('%(application)s/forms/manage_events/'%request,
-           _href=URL('forms','manage_events'))))}}</li>
+               _href=URL('forms','manage_events'))))}}</li>
   
-  <li>{{=XML(T('The main tool for managing references that validate events is at %s',
+      <li>{{=XML(T('The main tool for managing references that validate events is at %s',
                A('%(application)s/forms/manage_references/'%request,
-           _href=URL('forms','manage_references'))))}}</li>
-    <li>The design of this database has been written up for publication as a journal paper.  <a href="{{=URL('static', 'biosmoke_manuscript.pdf')}}" target="new">To read the manuscript click me</a> </li>
-    <li>{{=T('To become a user of the data inventory please register in top right corner.')}}</li>
+              _href=URL('forms','manage_references'))))}}</li>
+       <li>The design of this database has been written up for publication as a journal paper.  <a href="{{=URL('static', 'biosmoke_manuscript.pdf')}}" target="new">To read the manuscript click me</a> </li>
+       <li>{{=T('To become a user of the data inventory first please register in top right corner.')}}</li>
+       <li>{{=XML(T('Second add a reference that validates your events: %s',
+               A('%(application)s/forms/manage_references/'%request,
+              _href=URL('forms','manage_references'))))}}</li>
+      <li>{{=XML(T('Third, add events from the links created from that reference. The management form is at %s',
+               A('%(application)s/forms/manage_events/'%request,
+               _href=URL('forms','manage_events'))))}}</li>
 
 </ol>
     {{elif 'content' in globals():}}
