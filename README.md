@@ -1,6 +1,7 @@
 Biomass Smoke Events Database
 =============================
 
+
 This database is for creating and extending a list of validated bushfire smoke events in Australian cities.
 
 License: CC BY 4.0
