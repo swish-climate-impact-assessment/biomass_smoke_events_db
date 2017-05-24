@@ -95,7 +95,7 @@ db.define_table(
     Field('url', 'string', comment= 'URL.'),
     Field('summary', 'text', comment= 'Short summary.'),
     Field('abstract', 'text', comment= 'Executive summary or journal abstract.'),
-    Field('protocol_used', 'text', comment = XML(T('%s. The protocol used to identify evidence of an event, for example Johnston2011 for the original method of searching all news, journals, reports and satellite data, or Satellite Only if only satellite data where used.  Optionally leave this blank and it will be inserted on submission to the online master database.  Please also submit information on the protocol to the database manager.', A('More details are available here', _href=XML(URL('static','index.html',  anchor='sec-5-2', scheme=True, host=True)))))),
+    Field('protocol_used', 'text', comment = XML(T('%s. The protocol used to identify evidence of an event, for example Johnston2011 for the original method of searching all news, journals, reports and satellite data, or Salimi2016 if only satellite data where used.  The "Bare Minimum protocol" can be used if no air pollution data were analysed and there is just some reference available. Optionally leave this blank and it will be inserted on submission to the online master database.  Please also submit information on the protocol to the database manager.', A('For protocol details click here', _href=XML(URL('static','protocols.html', scheme=True, host=True)))))),
     format = '%(source)s %(id)s' 
     )
 

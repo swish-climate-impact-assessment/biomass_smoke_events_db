@@ -1,0 +1,50 @@
+#+TITLE:Biomass validated events database protocols 
+#+AUTHOR: Ivan Hanigan
+#+email: ivan.hanigan@anu.edu.au
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [a4paper]
+#+LATEX_HEADER: \usepackage{amssymb,amsmath}
+#+LATEX: \hypersetup{hidelinks=true}
+#+LATEX: \tableofcontents
+-----
+
+Overview: The database contains validated bushfire smoke events in Australian cities.
+
+This page lists the available protocols for validating events. Feel free to create your own. Please do document it and upload it to the master database if you want to share data with us.
+
+* Johnston2011 Protocol:
+
+This is the gold standard method and considerably more labour intensive than other methods.  
+
+The Johnston Protocol was the first method our team developed for this project and was published as a peer reviewed journal article in 2011 (Johnston et al. 2011). This protocol is considered the most conceptually appealing and rigorous method. In this protocol, for each location the longest available time-series of daily smoke air pollution is acquired. In our original study there were up to 13 years (between 1994 and 2007) of daily air quality data measured as Particulate Matter (PM) less than 10 μm (PM10) or less than 2.5 μm (PM2.5) in aerodynamic diameter were examined. Air pollution data were provided by government agencies in the states of Western Australia, New South Wales, and Tasmania. Daily averages for each site were calculated excluding days with less than 75% of hourly measurements. In Sydney and Perth, where data were collected from several monitoring stations, the missing daily site-specific PM concentrations were imputed using available data from other proximate monitoring sites in the network. The daily city-wide PM concentrations were then estimated following the protocol of the Air Pollution and Health: a European Approach studies (Katsouyanni et al. 1996 and Atkinson et al. 2001).
+
+First a ‘filling-in’ procedure was used to improve data completeness. It entailed the substitution of the missing daily values with a weighted average, using the weights of the missing sites 3-month average proportional to the network average. The weights are calculated against the values from the rest of the monitoring stations. The pollutant measures from all stations providing data were then averaged to provide single, city-wide estimates of the daily levels of the pollutants
+
+For each city, all days in which PM10 or PM2.5 exceeded the 95th percentile were identified over the entire time series. These extreme values were termed ‘events’. A range of sources was examined to identify the cause of particulate air pollution events, including online news archives, Internet searches for other reports, government and research agencies, satellite imagery and a Dust Storms database. Satellite images were mostly sourced from NASA, but remotely sensed aerosol optical thickness (AOT) data were also examined, to provide further information about days for which the other methods did not.
+
+** References for the Johnston Protocol
+The Johnston Protocol was used to initially develop the database. These are described in the paper Johnston, F. H., Hanigan, I. C., Henderson, S. B., Morgan, G. G., Portner, T., Williamson, G. J., & Bowman, D. M. J. S. (2011). Creating an Integrated Historical Record of Extreme Particulate Air Pollution Events in Australian Cities from 1994 to 2007. Journal of the Air & Waste Management Association, 61(4), 390–398. http://doi.org/10.3155/1047-3289.61.4.390.
+
+Atkinson, R.W., Anderson, R.H., Sunyer, J., Ayres, J., Baccini, M., Vonk, J.M., Boumghar, A., Forastiere, F., Forsberg, B., Touloumi, G., Schwartz, J. & Katsouyanni, K. (2001). Acute Effects of Particulate Air Pollution on Respiratory Admissions. American Journal of Respiratory and Critical Care Medicine, 164(10), 1860–1866.
+
+Katsouyanni, K., Schwartz, J., Spix, C., Touloumi, G., Zmirou, D., Zanobetti, A., Wojtyniak, B., Vonk, J.M., Tobias, A., Ponka, A., Medina, S., Bacharova, L. & Anderson, H.R. (1996). Short term effects of air pollution on health: a European approach using epidemiologic time series data: the APHEA protocol. Journal of Epidemiology & Community Health, 50(Suppl 1), S12–S18.
+
+* The Salimi2016 Protocol
+In 2016 one of our team (Farhad Salimi) extended the biomass smoke
+database for Sydney.  That project developed a refinement of the
+Johnston Protocol in which only satellite images were used, not review
+of other reference material.  In the Salimi protocol the air pollution
+data is processed in the same way.
+
+
+* The Bare Minimum Protocol
+
+In the Bare Minimum Protocol all that is required for an event to be
+validated is any reference that the contributer deems relevant. This
+can be found through any means including opportunistic collection of
+references in an ad hoc fasion.  This method is the least conceptually
+appealing because it results in a collection of events from times and
+places that have had unequal amounts of research effort expended on
+finding evidence, and therefore may contain systematic biases and data
+that are not 'missing at random'.
+ 
