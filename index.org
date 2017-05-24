@@ -7,7 +7,7 @@
 -----
 
 * sqlite works
-** TODO sqlite-code
+** TODO sqlite-code for update to ref table CAREFUL THIS MADE ERROR IN THE 1ST RECORD
 #+name:sqlite
 #+begin_src R :session *R* :tangle no :exports none :eval no
   #### name:sqlite ####
@@ -29,8 +29,94 @@
   dbSendQuery(con, "insert into biomass_smoke_reference (id, source, credentials, year, authors, title, volume, url, summary, abstract, protocol_used)
    select id, source, credentials, year, authors, title, volume, url, summary, abstract, protocol_used from  ref_bu")
   
+  dbGetQuery(con , "select * from biomass_smoke_event where biomass_smoke_reference_id = 1")
+  # whoops I deleted a record 1 that was test, and it deleted events
+  dbGetQuery(con , "select * from biomass_smoke_reference where id = 1")
+  
+  library(swishdbtools)
+  ch <- connect2postgres2("ewedb_staging")
+  replace <- dbGetQuery(ch , "select * from biomass_smoke_event where biomass_smoke_reference_id = 1")
+  replace
+  ?dbWriteTable
+  dbWriteTable(conn = con, "biomass_smoke_event_replace", replace)
+  
+  # bah, dates!
+  dbGetQuery(con , "delete from biomass_smoke_event where biomass_smoke_reference_id = 1")
+  paste(names(replace), sep = "", collapse = ", ")
+  dbSendQuery(con, "insert into biomass_smoke_event (
+  id, biomass_smoke_reference_id, place, event_type, met_conditions, burn_area_ha
+  )
+  select
+  id, biomass_smoke_reference_id, place, event_type, met_conditions, burn_area_ha
+  from biomass_smoke_event_replace")
+  
+  qc1 <- dbGetQuery(ch , "select * from biomass_smoke_event")
+  qc2 <- dbGetQuery(con , "select * from biomass_smoke_event")
+  nrow(qc1); nrow(qc2)
+  max(qc1$id)
+  max(qc2$id)
 #+end_src
-** TODO fix broken dbpy
+** TODO sqlite-code for update to event tab
+#+name:sqlite
+#+begin_src R :session *R* :tangle no :exports none :eval no
+  #### name:sqlite ####
+  library(RSQLite)
+  drv <- dbDriver("SQLite")
+  con <- dbConnect(drv, dbname = "~/tools/web2py/applications/biomass_smoke_events_db/databases/storage.sqlite")
+  dbListTables(con)
+  dbSendQuery(con, "create table event_bu as select * from biomass_smoke_event")
+  dbSendQuery(con, "drop table biomass_smoke_event")
+  
+  qc1 <- dbGetQuery(con , "select * from biomass_smoke_event")
+  nrow(qc1)
+  str(qc1)
+  qc2 <- dbGetQuery(con , "select * from event_bu")
+  nrow(qc2)
+  1252
+  str(qc2)
+  dbSendQuery(con, "drop table event_bu")
+  
+  paste(names(dbGetQuery(con , "select * from event_bu")), sep = "", collapse = ", ")
+  #dbGetQuery(con, " select
+  #id, biomass_smoke_reference_id, place, event_type, min_date, max_date, burn_area_ha, met_conditions #from
+  #event_bu")
+  
+  dbSendQuery(con, "insert into biomass_smoke_event (
+  id, biomass_smoke_reference_id, place, event_type, min_date, max_date, burn_area_ha, met_conditions
+  )
+   select
+  id, biomass_smoke_reference_id, place, event_type, min_date, max_date, burn_area_ha, met_conditions
+  from event_bu")
+  
+  ## dbGetQuery(con , "select * from biomass_smoke_event where biomass_smoke_reference_id = 1")
+  ## # whoops I deleted a record 1 that was test, and it deleted events
+  ## dbGetQuery(con , "select * from biomass_smoke_reference where id = 1")
+  
+  ## library(swishdbtools)
+  ## ch <- connect2postgres2("ewedb_staging")
+  ## replace <- dbGetQuery(ch , "select * from biomass_smoke_event where biomass_smoke_reference_id = 1")
+  ## replace
+  ## ?dbWriteTable
+  ## dbWriteTable(conn = con, "biomass_smoke_event_replace", replace)
+  
+  ## # bah, dates!
+  ## dbGetQuery(con , "delete from biomass_smoke_event where biomass_smoke_reference_id = 1")
+  ## paste(names(replace), sep = "", collapse = ", ")
+  ## dbSendQuery(con, "insert into biomass_smoke_event (
+  ## id, biomass_smoke_reference_id, place, event_type, met_conditions, burn_area_ha
+  ## )
+  ## select
+  ## id, biomass_smoke_reference_id, place, event_type, met_conditions, burn_area_ha
+  ## from biomass_smoke_event_replace")
+  
+  ## qc1 <- dbGetQuery(ch , "select * from biomass_smoke_event")
+  ## qc2 <- dbGetQuery(con , "select * from biomass_smoke_event")
+  ## nrow(qc1); nrow(qc2)
+  ## max(qc1$id)
+  ## max(qc2$id)
+#+end_src
+
+** TODO fix broken dbpy CAREFUL, THE ADD A RECORD BIT CAN GET THINGS OUT OF WHACK
 from
 https://groups.google.com/forum/#!topic/web2py/kCcRMFmZKB8
 
@@ -61,7 +147,7 @@ hit f5
 db.py
 fake_migrate_all = False, migrate = True
 
-go to the webform and insert a record
+ go to the webform but DONT  insert a record!
 
 Return to db.py to set migrate to migrate=False
 
@@ -79,21 +165,17 @@ step 3 add dates [at this link]
 ** DONE revise readme
 ** WONTDO make downloaded version not require log in
 ** DONE disable the URL for install.R (also this is security risk)
+** DONE C:/Temp is temporary, suggest the user move these before they start.
+instruction to go into project folder and double click the w2p.cmd
+you can go to events page, at bottom export to csv
 ** DONE make protocol landing page invite users to select a protocol
 a) Johnston, b) Farhad, c) bare minimun and d) suggest their own
 bare min is just
 step 1 get any reference
 step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
 step 3 go to web2py data entry form 
-** TODO note that when merging develop with master need to ensure that downloaders use sqlite
-** TODO find better place for contributions than readme
-# Contriubitions
 
-- 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
-
-** TODO decommission ANU site, make all references to the github, make landing page that says go to github
-
-** TODO general things found when Murray add a reference
+** DONE general things found when Murray add a reference
 DONE source is compulsory, authors is optional
 DONE title compulsory
 DONE volume optional
@@ -104,25 +186,19 @@ DONE optional abstract (this is the author thought of it)
 DONE spell it out somewhere that you can sort descending by clicking ID (twice)
 DONE then the 'biomass smoke events' link is where to go to Add an Event.
 
-Adding events
-TODO how to add a new place?
-- place add an Other option
-- then under that is a free text place.
+Adding events TODO how to add a new place?
+DONE - place add an Other option
+DONE - then under that is a free text place.
 
-min date, start date?
-max date, end date?
+WONTDO min date, start date?
+WONTDO max date, end date?
 no this is ok
 
 make it clear what is compulsory
 
-final step is to email Ivan.
-and if not that is fine but the expectation is to cite the data (the github)
+DONE final step is to email Ivan. and if not that is fine but the expectation is to cite the data (the github)
 
-** TODO C:/Temp is temporary, suggest the user move these before they start.
-instruction to go into project folder and double click the w2p.cmd
-you can go to events page, at bottom export to csv
-last step go to github, either submit pull request or see Ivan's current email address, send him a zipped version of the web2py folder along with any supporting data or other material
-
+** TODO decommission ANU site, make all references to the github, make landing page that says go to github
 ** TODO the github landing page is source code, gh-pages needs edit or removal
 ** TODO add DMJS Bowman as author
 ** TODO affiliations
@@ -138,7 +214,12 @@ Spatial Epidemiology Group,
 Centre for Research and Action in Public Health,
 Health Research Institute,
 University of Canberra, Canberra, ACT, Australia
+** TODO find better place for contributions than readme
+# Contriubitions
 
+- 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
+** TODO note that when merging develop with master need to ensure that downloaders use sqlite
+** TODO fix postgres tables.  Try this with backup tables, create shell then insert data.?  or can this happen without insert record?
 * manuscript
 ** go manuscript run-able R
 #+begin_src R :session *R* :tangle static/manuscript/go_manuscript.R :exports none :padline no :eval yes 
