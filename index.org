@@ -6,6 +6,69 @@
 #+LATEX: \tableofcontents
 -----
 
+* sqlite works
+** TODO sqlite-code
+#+name:sqlite
+#+begin_src R :session *R* :tangle no :exports none :eval no
+  #### name:sqlite ####
+  library(RSQLite)
+  drv <- dbDriver("SQLite")
+  con <- dbConnect(drv, dbname = "~/tools/web2py/applications/biomass_smoke_events_db/databases/storage.sqlite")
+  dbListTables(con)
+  dbSendQuery(con, "create table ref_bu as select * from biomass_smoke_reference")
+  dbSendQuery(con, "drop table biomass_smoke_reference")
+  
+  qc1 <- dbGetQuery(con , "select * from biomass_smoke_reference")
+  nrow(qc1)
+  698
+  qc2 <- dbGetQuery(con , "select * from ref_bu")
+  nrow(qc2)
+  dbSendQuery(con, "drop table ref_bu")
+  
+  paste(names(dbGetQuery(con , "select * from ref_bu")), sep = "", collapse = ", ")
+  dbSendQuery(con, "insert into biomass_smoke_reference (id, source, credentials, year, authors, title, volume, url, summary, abstract, protocol_used)
+   select id, source, credentials, year, authors, title, volume, url, summary, abstract, protocol_used from  ref_bu")
+  
+#+end_src
+** TODO fix broken dbpy
+from
+https://groups.google.com/forum/#!topic/web2py/kCcRMFmZKB8
+
+In the database's management tool delete/drop the table;
+
+library(RSQLite)
+drv <- dbDriver("SQLite")
+con <- dbConnect(drv, dbname = "~/tools/web2py/applications/data_inventory_demo/databases/storage.sqlite")
+dbListTables(con)
+dbSendQuery(con, "drop table dataset")
+
+
+Trash the table's .table file in the databases folder;
+
+fi <- dir(pattern = "_dataset.table")
+for(f in fi){system(sprintf("rm %s", f))}
+
+
+In db.py set migrate to migrate='tablename.table'
+
+fake_migrate_all = True, migrate = 'dataset.table'
+
+Save db.py
+
+Return to any app site, such as admin/default/design/appname Go to the database administration, 
+hit f5
+
+db.py
+fake_migrate_all = False, migrate = True
+
+go to the webform and insert a record
+
+Return to db.py to set migrate to migrate=False
+
+  fake_migrate_all = True, migrate = False)
+    
+
+
 * TODO-List
 ** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
 ** DONE landing DB page dot 4 "to enter new data go and register in top right"  remove email ivan.
@@ -30,17 +93,16 @@ step 3 go to web2py data entry form
 
 ** TODO decommission ANU site, make all references to the github, make landing page that says go to github
 
-** TODO add a reference
+** TODO general things found when Murray add a reference
 DONE source is compulsory, authors is optional
 DONE title compulsory
 DONE volume optional
 DONE general location means geographical location? optional? remove this.
-Desirable URL (e.g. doi or weblink of any kind and date accessed)
-  also you might want to add the folder location on your computer and the file name
-optional summary (this is what you think of it)
-optional abstract (this is the author thought of it)
-spell it out somewhere that you can sort descending by clicking ID (twice)
-then the 'biomass smoke events' link is where to go to Add an Event.
+DONE Desirable. This can be URL, doi or weblink of any kind (and date accessed). Also you might want to add the folder location on your computer and the file name.
+DONE optional summary (this is what you think of it)
+DONE optional abstract (this is the author thought of it)
+DONE spell it out somewhere that you can sort descending by clicking ID (twice)
+DONE then the 'biomass smoke events' link is where to go to Add an Event.
 
 Adding events
 TODO how to add a new place?

@@ -11,7 +11,7 @@
 
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
-    db = DAL('sqlite://storage.sqlite',pool_size=1, fake_migrate_all = True)
+    db = DAL('sqlite://storage.sqlite',pool_size=1, fake_migrate_all = True, migrate=False)
     #db = DAL("postgres://user:password@localhost:5432/ewedb_staging", fake_migrate_all = False)
 else:
     ## connect to Google BigTable (optional 'google:datastore://namespace')
@@ -88,12 +88,13 @@ db.define_table(
     Field('source', 'string', comment='Compulsory. The source. Author or Organisation.'),
     Field('title', 'string', comment= 'Compulsory. Reference title.'),    
     Field('year', 'integer', comment = 'Compulsory. Publication year'),
-    Field('credentials', 'string', comment='Type of source.', requires=IS_IN_SET(['government','internet','journal','media','modis hotspot','modis smoke','toms'])),    
+    Field('credentials', 'string', comment='Type of source.', requires=IS_IN_SET(['other','government','internet','journal','media','modis hotspot','modis smoke','toms'])),
+    Field('credentials_other', 'string', comment='What other type of source?'),    
     Field('authors', 'string', comment= 'Author list.'),
     Field('volume', 'integer', comment = 'Journal volume.'), 
-    Field('url', 'string', comment= 'URL.'),
-    Field('summary', 'text', comment= 'Short summary.'),
-    Field('abstract', 'text', comment= 'Executive summary or journal abstract.'),
+    Field('url', 'string', comment= 'Desirable. This can be URL, doi or weblink of any kind (and date accessed). Also you might want to add the folder location on your computer and the file name.'),
+    Field('summary', 'text', comment= 'Short summary written by you.'),
+    Field('abstract', 'text', comment= 'Executive summary copied from the journal/report abstract.'),
     Field('protocol_used', 'text', comment = XML(T('%s. The protocol used to identify evidence of an event, for example Johnston2011 for the original method of searching all news, journals, reports and satellite data, or Salimi2016 if only satellite data where used.  The "Bare Minimum protocol" can be used if no air pollution data were analysed and there is just some reference available. Optionally leave this blank and it will be inserted on submission to the online master database.  Please also submit information on the protocol to the database manager.', A('For protocol details click here', _href=XML(URL('static','protocols.html', scheme=True, host=True)), _target='new')))),
     format = '%(source)s %(id)s' 
     )
