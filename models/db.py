@@ -85,22 +85,23 @@ use_janrain(auth, filename='private/janrain.key')
 # auth.enable_record_versioning(db)
 db.define_table(
     'biomass_smoke_reference',
-    Field('source', 'string', comment='The source. Author or Organisation.'),
-    Field('credentials', 'string', comment='Type of source.', requires=IS_IN_SET(['government','internet','journal','media','modis hotspot','modis smoke','toms'])),
-    Field('year', 'integer', comment = 'Publication year'),
+    Field('source', 'string', comment='Compulsory. The source. Author or Organisation.'),
+    Field('title', 'string', comment= 'Compulsory. Reference title.'),    
+    Field('year', 'integer', comment = 'Compulsory. Publication year'),
+    Field('credentials', 'string', comment='Type of source.', requires=IS_IN_SET(['government','internet','journal','media','modis hotspot','modis smoke','toms'])),    
     Field('authors', 'string', comment= 'Author list.'),
-    Field('title', 'string', comment= 'Reference title.'),
     Field('volume', 'integer', comment = 'Journal volume.'), 
-    Field('general_location', 'string', comment= 'Free text location information.'),
     Field('url', 'string', comment= 'URL.'),
     Field('summary', 'text', comment= 'Short summary.'),
     Field('abstract', 'text', comment= 'Executive summary or journal abstract.'),
-    Field('protocol_used', 'text', comment = XML(T('%s. The protocol used to identify evidence of an event, for example Johnston2011 for the original method of searching all news, journals, reports and satellite data, or Salimi2016 if only satellite data where used.  The "Bare Minimum protocol" can be used if no air pollution data were analysed and there is just some reference available. Optionally leave this blank and it will be inserted on submission to the online master database.  Please also submit information on the protocol to the database manager.', A('For protocol details click here', _href=XML(URL('static','protocols.html', scheme=True, host=True)))))),
+    Field('protocol_used', 'text', comment = XML(T('%s. The protocol used to identify evidence of an event, for example Johnston2011 for the original method of searching all news, journals, reports and satellite data, or Salimi2016 if only satellite data where used.  The "Bare Minimum protocol" can be used if no air pollution data were analysed and there is just some reference available. Optionally leave this blank and it will be inserted on submission to the online master database.  Please also submit information on the protocol to the database manager.', A('For protocol details click here', _href=XML(URL('static','protocols.html', scheme=True, host=True)), _target='new')))),
     format = '%(source)s %(id)s' 
     )
 
 db.biomass_smoke_reference.source.requires = IS_NOT_EMPTY()
+db.biomass_smoke_reference.title.requires = IS_NOT_EMPTY()
 db.biomass_smoke_reference.year.requires = IS_NOT_EMPTY()
+
 db.define_table(
     'biomass_smoke_event',
     Field('biomass_smoke_reference_id', db.biomass_smoke_reference),

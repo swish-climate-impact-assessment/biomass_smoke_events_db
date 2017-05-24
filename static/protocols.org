@@ -40,11 +40,14 @@ data is processed in the same way.
 * The Bare Minimum Protocol
 
 In the Bare Minimum Protocol all that is required for an event to be
-validated is any reference that the contributer deems relevant. This
-can be found through any means including opportunistic collection of
-references in an ad hoc fasion.  This method is the least conceptually
-appealing because it results in a collection of events from times and
-places that have had unequal amounts of research effort expended on
-finding evidence, and therefore may contain systematic biases and data
-that are not 'missing at random'.
+validated is any reference that the contributer deems relevant.  Use
+as much detail as possible e.g. author, title, publisher, year, URL,
+date Accessed.
+
+The references can be found through any means including opportunistic
+collection of references in an ad hoc fasion.  This method is the
+least conceptually appealing because it results in a collection of
+events from times and places that have had unequal amounts of research
+effort expended on finding evidence, and therefore may contain
+systematic biases and data that are not 'missing at random'.
  
