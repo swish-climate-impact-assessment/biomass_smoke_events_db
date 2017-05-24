@@ -8,21 +8,23 @@
     <h4>{{=T('Instructions')}}</h4>
 <ol>
       <li>{{=T('You are using the events database')}}</li>
-      <li>{{=XML(T('The list of validated events is at %s',
+      <li>{{=XML(T('The list of validated events is at %s.  You can sort this list in descending order by clicking the ID column label twice.',
                A('%(application)s/forms/manage_events/'%request,
-               _href=URL('forms','manage_events'))))}}</li>
+               _href=XML(URL('forms','manage_events')), _target='new')))}}</li>
   
       <li>{{=XML(T('The main tool for managing references that validate events is at %s',
                A('%(application)s/forms/manage_references/'%request,
-              _href=URL('forms','manage_references'))))}}</li>
-       <li>The design of this database has been written up for publication as a journal paper.  <a href="{{=URL('static', 'biosmoke_manuscript.pdf')}}" target="new">To read the manuscript click me</a> </li>
-       <li>{{=T('To become a user of the data inventory first please register in top right corner.')}}</li>
-       <li>{{=XML(T('Second add a reference that validates your events: %s',
+              _href=XML(URL('forms','manage_references')), _target='new')))}}</li>
+       <li>BEFORE YOU START ADDING DATA: Please read the design of this database.  This has been written up for publication as a journal paper. You need to decide on which validation protocol you will follow, or if you want to create a new one. <a href="{{=URL('static', 'biosmoke_manuscript.pdf')}}" target="new">To read the manuscript click me</a>.  To jump to the Protocols <a href="{{=URL('static', 'protocols.html')}}" target="new">click me</a> </li>
+       <li>{{=T('FIRST: Become a user of the data inventory. Register in top right corner.')}}</li>
+       <li>{{=XML(T('SECOND: add a reference that validates your events by adding a record at this form: %s, and then hit Submit.',
                A('%(application)s/forms/manage_references/'%request,
-              _href=URL('forms','manage_references'))))}}</li>
-      <li>{{=XML(T('Third, add events from the links created from that reference. The management form is at %s',
+              _href=XML(URL('forms','manage_references')), _target='new')))}}</li>
+      <li>{{=XML(T('THIRD: add events from that reference. You can get to this from the "Biomass smoke events" link that appear next to the refence you just added, then go to Add Record. You can add events to any Reference that was previously added using the management form at %s.',
                A('%(application)s/forms/manage_events/'%request,
-               _href=URL('forms','manage_events'))))}}</li>
+               _href=XML(URL('forms','manage_events')), _target='new')))}}</li>
+       <li>The final step is optional.  If you want to contribute your data then either go to the GitHub repository and submit a pull request or see the GitHub account for a current email address, send a zipped version of the web2py folder along with any supporting data or other material.
+If you do not want to, that is fine but the expectation is to cite the data and abide by the Creative Commons BY 4.0 licence (see <a href = "https://github.com/swish-climate-impact-assessment/biomass_smoke_events_db" target = "new">https://github.com/swish-climate-impact-assessment/biomass_smoke_events_db</a>)</li>
 
 </ol>
     {{elif 'content' in globals():}}
@@ -32,6 +34,6 @@
     {{pass}}
 
     {{block right_sidebar}}
-{{=A(T("About this site"), _href=URL('static', 'index.html'), _class='btn',
+{{=A(T("About this site"), _href=XML(URL('static', 'protocols.html')), _target='new', _class='btn',
          _style='margin-top: 1em;')}}
 {{end}}

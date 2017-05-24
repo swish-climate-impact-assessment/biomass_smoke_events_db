@@ -11,8 +11,8 @@
 
 if not request.env.web2py_runtime_gae:
     ## if NOT running on Google App Engine use SQLite or other DB
-    db = DAL('sqlite://storage.sqlite',pool_size=1, fake_migrate_all = True)
-    #db = DAL("postgres://user:password@localhost:5432/ewedb_staging", fake_migrate_all = False)
+    db = DAL('sqlite://storage.sqlite',pool_size=1, fake_migrate_all = True, migrate=False)
+    #db = DAL("postgres://w2p_user:xpassword@localhost:5432/ewedb_staging", fake_migrate_all = True, migrate = False)
 else:
     ## connect to Google BigTable (optional 'google:datastore://namespace')
     db = DAL('google:datastore')
@@ -85,26 +85,30 @@ use_janrain(auth, filename='private/janrain.key')
 # auth.enable_record_versioning(db)
 db.define_table(
     'biomass_smoke_reference',
-    Field('source', 'string', comment='The source. Author or Organisation.'),
-    Field('credentials', 'string', comment='Type of source.', requires=IS_IN_SET(['government','internet','journal','media','modis hotspot','modis smoke','toms'])),
-    Field('year', 'integer', comment = 'Publication year'),
+    Field('source', 'string', comment='Compulsory. The source. Author or Organisation.'),
+    Field('title', 'string', comment= 'Compulsory. Reference title.'),    
+    Field('year', 'integer', comment = 'Compulsory. Publication year'),
+    Field('credentials', 'string', comment='Type of source.', requires=IS_IN_SET(['other','government','internet','journal','media','modis hotspot','modis smoke','toms'])),
+    Field('credentials_other', 'string', comment='What other type of source?'),
+    Field('protocol_used', 'text', comment = XML(T('See this %s link. The protocol used to identify evidence of an event, for example Johnston2011 for the original method of searching all news, journals, reports and satellite data, or Salimi2016 if only satellite data where used.  The "Bare Minimum protocol" can be used if no air pollution data were analysed and there is just some reference available. Optionally leave this blank and it will be inserted on submission to the online master database.  Please also submit information on the protocol to the database manager.', A('protocol', _href=XML(URL('static','protocols.html', scheme=True, host=True)), _target='new2')))
+          ),    
     Field('authors', 'string', comment= 'Author list.'),
-    Field('title', 'string', comment= 'Reference title.'),
     Field('volume', 'integer', comment = 'Journal volume.'), 
-    Field('general_location', 'string', comment= 'Free text location information.'),
-    Field('url', 'string', comment= 'URL.'),
-    Field('summary', 'text', comment= 'Short summary.'),
-    Field('abstract', 'text', comment= 'Executive summary or journal abstract.'),
-    Field('protocol_used', 'text', comment = XML(T('%s. The protocol used to identify evidence of an event, for example Johnston2011 for the original method of searching all news, journals, reports and satellite data, or Satellite Only if only satellite data where used.  Optionally leave this blank and it will be inserted on submission to the online master database.  Please also submit information on the protocol to the database manager.', A('More details are available here', _href=XML(URL('static','index.html',  anchor='sec-5-2', scheme=True, host=True)))))),
+    Field('url', 'string', comment= 'Desirable. This can be URL, doi or weblink of any kind (and date accessed). Also you might want to add the folder location on your computer and the file name.'),
+    Field('summary', 'text', comment= 'Short summary written by you.'),
+    Field('abstract', 'text', comment= 'Executive summary copied from the journal/report abstract.'),
     format = '%(source)s %(id)s' 
     )
 
 db.biomass_smoke_reference.source.requires = IS_NOT_EMPTY()
+db.biomass_smoke_reference.title.requires = IS_NOT_EMPTY()
 db.biomass_smoke_reference.year.requires = IS_NOT_EMPTY()
+
 db.define_table(
     'biomass_smoke_event',
     Field('biomass_smoke_reference_id', db.biomass_smoke_reference),
-    Field('place', requires = IS_IN_SET(['ALBANY','Albury','Bathurst','BUNBURY','BUSSELTON','GERALDTON','hobart','Illawarra','launceston','Newcastle','PERTH','Sydney East','Sydney West','Tamworth','Wagga Wagga']), comment='The pre-determined study locations of the biomass smoke project.'),
+    Field('place', requires = IS_IN_SET(['Other','ALBANY','Albury','Bathurst','BUNBURY','BUSSELTON','GERALDTON','hobart','Illawarra','launceston','Newcastle','PERTH','Sydney East','Sydney West','Tamworth','Wagga Wagga']), comment='The pre-determined study locations of the biomass smoke project.'),
+    Field('place_other', 'string', comment='If you chose "other place" what is the name of this?'),        
     Field('event_type', requires = IS_IN_SET(['bushfire','dust','non-biomass, fire','non-biomass, non-fire','possible biomass','prescribed burn','woodsmoke']), comment = 'Compulsory. Select from list'),
     Field('min_date', 'date', comment='The first date of known event. Compulsory.'),
     Field('max_date', 'date', comment = 'The last date of known event. Optional'),
