@@ -8,20 +8,21 @@
 
 * TODO-List
 ** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
-** TODO the URL for install.R (also this is security risk)
-** TODO make protocol landing page invite users to 
-a) Johnston, b) Farhad, c) bare minimun and d) suggest their own
-bare min is just
-step 1 get any reference
-step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
-step 3 go to web2py data entry form 
-** TODO make downloaded version not require log in
-** TODO decommission ANU site, make all references to the github, make landing page that says go to github
+** TODO note that when merging develop with master need to make the switch to use sqlite
 ** TODO landing DB page "to enter new data go and register in top right"  remove email ivan.
 this becomes dot 5, dot 4 becomes manuscript flesh out dot 
 say step 1 register
 step 2 add a reference [at this link]
 step 3 add dates [at this link]
+** TODO make protocol landing page invite users to select a protocol
+a) Johnston, b) Farhad, c) bare minimun and d) suggest their own
+bare min is just
+step 1 get any reference
+step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
+step 3 go to web2py data entry form 
+** TODO the URL for install.R (also this is security risk)
+** TODO make downloaded version not require log in
+** TODO decommission ANU site, make all references to the github, make landing page that says go to github
 
 ** TODO add a reference
 source is compulsory, authors is optional
