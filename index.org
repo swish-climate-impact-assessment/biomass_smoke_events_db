@@ -62,7 +62,7 @@
   #### name:sqlite ####
   library(RSQLite)
   drv <- dbDriver("SQLite")
-  con <- dbConnect(drv, dbname = "~/tools/web2py/applications/biomass_smoke_events_db/databases/storage.sqlite")
+  con <- dbConnect(drv, dbname = "~/tools/web2py/applications/biomass_smoke_events_db/databases_20170607/storage.sqlite")
   dbListTables(con)
   dbSendQuery(con, "create table event_bu as select * from biomass_smoke_event")
   dbSendQuery(con, "drop table biomass_smoke_event")
@@ -154,6 +154,68 @@ Return to db.py to set migrate to migrate=False
   fake_migrate_all = True, migrate = False)
     
 
+** fixing postgres after mods to sqlite
+in pgadmin rename the orig as today date
+
+> library(RSQLite)
+> drv <- dbDriver("SQLite") 
+> con <- dbConnect(drv, dbname = "~/tools/web2py/applications/biomass_smoke_events_db/databases_20170607/storage.sqlite")
+> dbListTables(con)
+> qc1 <- dbGetQuery(con , "select * from biomass_smoke_event")
+> str(qc1)
+qc2 <- dbGetQuery(con , "select * from biomass_smoke_reference")
+str(qc2) 
+
+
+CREATE TABLE public.biomass_smoke_reference
+(
+  id integer NOT NULL DEFAULT nextval('biomass_smoke_reference_id_seq'::regclass),
+  source character varying(512),
+  title character varying(512),
+  year integer,
+  credentials character varying(512),
+  credentials_other character varying(512),
+  authors character varying(512),
+  volume integer,
+  url character varying(512),
+  summary text,
+  abstract text,
+  protocol_used text,
+  CONSTRAINT biomass_smoke_reference_pk PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.biomass_smoke_reference
+  OWNER TO w2p_user;
+GRANT ALL ON TABLE public.biomass_smoke_reference TO w2p_user;
+GRANT SELECT ON TABLE public.biomass_smoke_reference TO ivan_hanigan;
+
+CREATE TABLE public.biomass_smoke_event
+(
+  id integer NOT NULL DEFAULT nextval('biomass_smoke_event_id_seq'::regclass),
+  biomass_smoke_reference_id integer,
+  place character varying(512),
+  place_other character varying(512),
+  event_type character varying(512),
+  min_date date,
+  max_date date,
+  burn_area_ha double precision,
+  met_conditions text,
+  CONSTRAINT biomass_smoke_event_pk PRIMARY KEY (id),
+  CONSTRAINT biomass_smoke_event_biomass_smoke_reference_id_fk FOREIGN KEY (biomass_smoke_reference_id)
+      REFERENCES public.biomass_smoke_reference (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.biomass_smoke_event
+  OWNER TO w2p_user;
+GRANT ALL ON TABLE public.biomass_smoke_event TO w2p_user;
+GRANT ALL ON TABLE public.biomass_smoke_event TO ivan_hanigan;
+
+
 
 * TODO-List
 ** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
@@ -198,10 +260,17 @@ make it clear what is compulsory
 
 DONE final step is to email Ivan. and if not that is fine but the expectation is to cite the data (the github)
 
+** DONE make for both postgres, dev and master sqlite a user 'visitor@visitor.org', visitor
+** DONE make changes into the postgres tables
+** DONE fix postgres tables.  Try this with backup tables, create shell then insert data.?  or can this happen without insert record?
+** TODO what is procedure for deploy to sqlite db?
+** TODO make changes to the protocols page, and the manuscript link
+** TODO add contributer name to references
+** TODO add farhad's melbourne
 ** TODO decommission ANU site, make all references to the github, make landing page that says go to github
 ** TODO the github landing page is source code, gh-pages needs edit or removal
-** TODO add DMJS Bowman as author
-** TODO affiliations
+** DONE add DMJS Bowman as author
+** TODO affiliations and  (geoff UCRH)
 Postdoctoral research fellow
 University Centre for Rural Health,
 Sydney Medical School,
@@ -219,7 +288,6 @@ University of Canberra, Canberra, ACT, Australia
 
 - 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
 ** TODO note that when merging develop with master need to ensure that downloaders use sqlite
-** TODO fix postgres tables.  Try this with backup tables, create shell then insert data.?  or can this happen without insert record?
 * manuscript
 ** go manuscript run-able R
 #+begin_src R :session *R* :tangle static/manuscript/go_manuscript.R :exports none :padline no :eval yes 
