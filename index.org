@@ -263,13 +263,14 @@ DONE final step is to email Ivan. and if not that is fine but the expectation is
 ** DONE make for both postgres, dev and master sqlite a user 'visitor@visitor.org', visitor
 ** DONE make changes into the postgres tables
 ** DONE fix postgres tables.  Try this with backup tables, create shell then insert data.?  or can this happen without insert record?
-** TODO what is procedure for deploy to sqlite db?
-** TODO make changes to the protocols page, and the manuscript link
+** DONE add DMJS Bowman as author
 ** TODO add contributer name to references
 ** TODO add farhad's melbourne
+** TODO add endnote refs in style, and grant refs
+** TODO what is procedure for deploy to sqlite db?
+** TODO make changes to the protocols page, and the manuscript link
 ** TODO decommission ANU site, make all references to the github, make landing page that says go to github
 ** TODO the github landing page is source code, gh-pages needs edit or removal
-** DONE add DMJS Bowman as author
 ** TODO affiliations and  (geoff UCRH)
 Postdoctoral research fellow
 University Centre for Rural Health,
@@ -288,7 +289,7 @@ University of Canberra, Canberra, ACT, Australia
 
 - 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
 ** TODO note that when merging develop with master need to ensure that downloaders use sqlite
-* manuscript
+* manuscript DEPRECATED NOW I FINISHED IN WORD
 ** go manuscript run-able R
 #+begin_src R :session *R* :tangle static/manuscript/go_manuscript.R :exports none :padline no :eval yes 
   setwd("/home/ivan_hanigan/tools/web2py/applications/biomass_smoke_events_db/static/manuscript")
