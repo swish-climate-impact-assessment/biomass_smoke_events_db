@@ -29,25 +29,83 @@ Atkinson, R.W., Anderson, R.H., Sunyer, J., Ayres, J., Baccini, M., Vonk, J.M., 
 
 Katsouyanni, K., Schwartz, J., Spix, C., Touloumi, G., Zmirou, D., Zanobetti, A., Wojtyniak, B., Vonk, J.M., Tobias, A., Ponka, A., Medina, S., Bacharova, L. & Anderson, H.R. (1996). Short term effects of air pollution on health: a European approach using epidemiologic time series data: the APHEA protocol. Journal of Epidemiology & Community Health, 50(Suppl 1), S12–S18.
 
-* The Salimi2016 Protocol
-In 2016 one of our team (Farhad Salimi) extended the biomass smoke
-database for Sydney.  That project developed a refinement of the
-Johnston Protocol in which only satellite images were used, not review
-of other reference material.  In the Salimi protocol the air pollution
-data is processed in the same way.
+** Detailed description of Johnston 2011 protocol
+Step 1: Air pollution data acquisition
+
+Step 1.0 Time series observations of air pollution and spatial site location data were acquired from custodians.
+
+Step 1.1. In an example, NSW data were downloaded from an online data server. Site locations (Latitude and Longitude) were obtained from the website.
+
+Step 1.2. In a different example, WA data was sent on a CD from contacts at the WA Government Department, these were hourly data as provided. These were cleaned so as only days with > 75% of hours available were used. Note that the license with WA Government places restrictions on our right to provide data to a third party. Therefore, those observed and imputed data were not included in the open access database, only the computed ‘potential events dates’.
+
+Step 1.3. In a third example, Tasmanian data were sent via email from our contact at the Government Department; these were daily data and required minimal data cleaning.
+
+Step 1.4. All data were combined into a PostGIS database and exploratory data analysis conducted.
+
+Step 2. Define spatial extent for cities
+The cities and towns were selected based on the aims of the original study to investigate cardio-respiratory disease and air pollution from extreme biomass smoke events in Australian cities and towns. These were Albany, Albury, Armidale, Bathurst, Bunbury, Busselton, Geraldton, Gosford-Wyong, Hobart, Illawarra, Launceston, Newcastle, Perth, Sydney, Tamworth and Wagga Wagga.
+The spatial extent of each city and town was devised by intersecting Australian Bureau of Statistics Statistical Local Areas (SLAs) from the various Census editions. These boundaries were selected to give the best possible representation of hospital admissions from the population.
+Air pollution monitoring sites were then selected on the basis of their spatial proximity to these locations.
+
+Step 3. Imputation to fill in gaps in the time-series and calculate a network average
+In cities where data were collected from several monitoring stations, the missing daily site-specific PM concentrations were imputed using available data from other proximate monitoring sites in the network. The daily city-wide PM concentrations were then estimated following the protocol of the APHEA studies.
+
+Step 3.1. Firstly, data preparation was necessary to find the minimum date that the series of continuous observations can be considered to start. In the Australian datasets the earliest initial observations could not be used because they were usually made only on one day per week, and only during a particular season or of poor quality due to teething problems with equipment and procedures. Then it was necessary to identify missing dates and get a list of the sites and periods to include – that is, with more than 70% of days having observations present over the time period (as defined after we assessed the minimum and maximum dates of the period).
+
+Step 3.2. For each station a daily network average of all the other non-missing sites was calculated (i.e. an average of all stations except the focal station of that iteration in the loop).
+
+Step 3.3. A three monthly seasonal mean was calculated of these non-missing stations. Then a three-month seasonal mean for the missing site was calculated. The missing value was replaced by the mean level of the remaining stations, multiplied by a factor equal to the ratio of the seasonal (centered three month) mean for the missing station, over the corresponding mean from the stations that were available on that particular day.
+
+Step 3.4. All sites for city wide averages were joined to fill any missing days at the site-level with average of the days immediately before and after the missing days (but only when this was below a threshold of 5% of observations in the record for that site).
+
+Step 3.5. The average of all sites was calculated per day to create a city-wide average per day.
+
+Step 3.6. Any missing days were filled at the city-wide level with the average of before and after (if 
+this was less than 5% of days).
+
+Step 4. Validate events and identify the causes
+In this stage of the procedure it was necessary to select any dates with PM10 or PM2.5 greater than the 95th percentile. Then the analyst manually validated these ‘potential event dates’ using the news archives, government reports, satellite images and other relevant source documents. The contributor entered the information for each event into the custom built data entry forms. For any events with references for multiple types of source, it is important to assess the likelihood of any single source being the dominant one. A final double-check of any remaining 99th percentile dates with no references was made as these are a high priority subset of ‘potential event dates’.
+
+Step 5. Contributed pollution and validated events inserted to master database
+In new data contributions the data were sent by email (or via GitHub pull request) to our data manager and (after quality assurance checks) these were inserted into the master database copy and uploaded as the next version of the database snapshot on GitHub.
+
+* The Morgan 2010 Protocol
+
+This protocol was developed by one of our colleagues and authors (Dr Morgan) for a study in Sydney, Australia.  The procedure is very similar to the Johnston 2011 Protocol in that the ‘potential event dates’ are identified as days with city-wide 24 hours average PM concentrations greater than the 99th percentile for the study period. These dates are then validated as either bushfires or fuel-reduction burns on or immediately prior to these days by checking newspaper archives and any other sources. The main differences are that the 99th percentile is only used (instead of 95th and 99th), event type search word terms are restricted to ‘bushfire’ or ‘fuel-reduction/prescribed burn’ (not extended to include ‘smog’, ‘dust’ or ‘haze’), and there was no systematic review of satellite images.
+
+Reference: Morgan G, Sheppeard V, Khalaj B, Ayyar A, Lincoln D, Jalaludin B, Beard J, Corbett S, Lumley T: Effects of bushfire smoke on daily mortality and hospital admissions in Sydney, Australia. Epidemiology 2010, 21(1):47-55.
+
+* The Salimi 2016 and 2017 Protocols
+In 2016 one of our colleagues and authors (Dr Salimi) extended the biomass smoke database for Sydney. That project developed a refinement of the Johnston 2011 Protocol in which only satellite images and news archives were used. In the Salimi 2016 Protocol the air pollution data was processed in the same way as the Johnston Protocol.  In 2017 Dr Salimi applied these techniques to the city of Melbourne, Australia and in addition to satellite and news data on the same day and days prior, evidence was sought in searches of the government Environmental Protection Agency (EPA) reports.
 
 
 * The Bare Minimum Protocol
 
-In the Bare Minimum Protocol all that is required for an event to be
-validated is any reference that the contributer deems relevant.  Use
-as much detail as possible e.g. author, title, publisher, year, URL,
-date Accessed.
 
-The references can be found through any means including opportunistic
-collection of references in an ad hoc fasion.  This method is the
-least conceptually appealing because it results in a collection of
-events from times and places that have had unequal amounts of research
-effort expended on finding evidence, and therefore may contain
-systematic biases and data that are not 'missing at random'.
- 
+In this protocol all that is required for an event to be validated is any reference that the contributor deems relevant. It is desirable that they add as much detail as possible to the database (e.g. author, title, publisher, year, URL, and date accessed).  To date only two references have been inserted using this protocol  [17, 18], but considering the greater ease with which contributors may validate events in this way it is envisaged that this protocol will prove popular. It is envisaged that this method will allow the database to capture more events in an opportunistic way as many sources of information will become available in an ad hoc fashion.  
+
+However, this method is the least conceptually appealing because it results in a collection of events from times and places that have had unequal amounts of research effort expended on finding evidence (e.g. differential sampling intensity), and therefore may contain systematic biases and data that are not 'missing at random'.
+
+* Differential sampling intensity and potential exposure misclassification bias
+The Event Validation Protocols described in this paper are all conceptually appealing because they allow a collection of events from times and places if evidence is available from the sources.  Unfortunately the end result of combining these data into a single database is that the derived dataset is made up of components which have had unequal amounts of research effort expended on finding evidence (e.g. differential sampling intensity), as well as different search criteria used for finding the references to support events, and therefore the database may contain systematic biases and data that are not 'missing at random'.  
+
+
+Epidemiological studies that investigate the relationship between health and air pollution exposures have primarily used time-series methods that study variations of some health outcomes such as deaths or hospitalizations from specific disease groups. These outcomes are usually monitored at a daily time resolution across whole cities, and relationships with atmospheric variables are estimated using regression models. Studies typically focus on daily levels of ambient air pollution measured by a network of monitoring sites scattered across a city, time matched to the health outcomes on the same day or a few days after.
+
+This raises the potential for bias by exposure miss-classification, which would occur by classifying actual fire smoke/dust days as non-fire smoke/dust days, or classifying non-fire dust days as actual fire/dust days.  The impact of exposure misclassification will of course be related to the particular study design implemented with the fire smoke database. For time series studies the issue is discussed briefly in Morgan et al. 2010.  They explain that missing some bushfire days would reduce the power of the analysis to find an effect (if one is present), but it would be unlikely to bias the result. Because fire smoke/dust incidents are rare and PM is usual relatively low in Sydney (and in most other Australian cities) it is possible to categorize any day as having either “Biomass Smoke Event” PM or “background” PM. Morgan et al. 2010 included this background PM explicitly in their model to capture differences with the Biomass Smoke Event days. It is possible such an approach will include a small number of extra bushfire days with days categorized as background days. Morgan et al argue that any such inclusions would be unlikely to influence the background PM results due to the large number of non-bushfire days in a multi-year study period. The sensitivity analysis they conducted did not categorize daily PM into bushfire PM and background PM. They found results similar to those reported for background PM. This suggests that including additional bushfire days with non-bushfire days in the background PM analysis would not bias their PM results.
+
+
+* Data 
+** Air pollution data provided
+The NSW Air pollution data are available as cleaned data in the database, and raw data can be downloaded from http://www.environment.nsw.gov.au/AQMS/search.htm. The raw and cleaned WA data are under a restricted license, although the derived event data are included in the database as open access.  The raw Tasmanian data are available on request, and the cleaned data are published in the database.  Any future data contributions will be published under open licenses if possible.
+
+** Data derived
+
+The data set supporting the results of this article are available in the repository from the website on Github. We have applied the license under Creative Commons - Attribution 4.0. This allows others to copy, distribute and create derivative works provided that they credit this document along with the original source documents of the validation protocol they used (unless they created their own criteria).
+* Selecting which of the protocols to follow
+Any of the protocols defined above can be used, or the contributor can create their own. This flexibility to allow multiple approaches is a strength of this database, but also presents the users with some challenges.  On the one hand it is beneficial that decisions on the protocol to be used can be made based on the resources available that can be allocated to the effort. On the other hand this presents difficulty to select which protocol to follow.  
+
+For example a research team can balance the costs and benefits of hiring a dedicated research assistant to search news archives versus how much it costs to just search satellite imagery. But it can be a challenge to the contributor to consider the implications of the different options and make the necessary comparisons required for a final judgement.  In addition, the fact that different validation protocols are inherent in different groups of validated events there is a potential for selection bias to be introduced by differential sampling intensity in certain locations and time periods compared to others.  This is discussed below in the section on limitations.
+
+
+  
