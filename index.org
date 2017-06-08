@@ -230,7 +230,7 @@ GRANT ALL ON TABLE public.biomass_smoke_event TO ivan_hanigan;
 this becomes dot 5, dot 4 becomes manuscript flesh out dot 
 say step 1 register
 step 2 add a reference [at this link]
-step 3 add dates [at this link]
+step 3 add dates [at this link]    
 ** DONE revise readme
 ** WONTDO make downloaded version not require log in
 ** DONE disable the URL for install.R (also this is security risk)
@@ -272,10 +272,11 @@ DONE final step is to email Ivan. and if not that is fine but the expectation is
 ** DONE fix postgres tables.  Try this with backup tables, create shell then insert data.?  or can this happen without insert record?
 ** DONE add DMJS Bowman as author
 ** DONE add contributer name to references
-** TODO add endnote refs in style, and grant refs
+** DONE add endnote refs in style, and grant refs
+** DONE make changes to the protocols page, bring in sync with manuscript, and the manuscript link is to an old pdf in /static
+
 ** TODO add farhad's melbourne
 ** TODO what is procedure for deploy to sqlite db?
-** TODO make changes to the protocols page, bring in sync with manuscript, and the manuscript link is to an old pdf in /static
 ** TODO decommission ANU site, make all references to the github, make landing page that says go to github
 ** TODO the github landing page is source code, gh-pages needs edit or removal
 ** TODO affiliations and  (geoff UCRH)

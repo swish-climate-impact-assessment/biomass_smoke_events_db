@@ -8,7 +8,9 @@
 #+LATEX: \tableofcontents
 -----
 
-Overview: The database contains validated bushfire smoke events in Australian cities.
+* Overview
+
+The database contains validated bushfire smoke events in Australian cities.
 
 This page lists the available protocols for validating events. Feel free to create your own. Please do document it and upload it to the master database if you want to share data with us.
 
