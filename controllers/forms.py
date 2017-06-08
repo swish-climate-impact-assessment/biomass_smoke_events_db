@@ -8,6 +8,7 @@ def manage_references():
                                        
                                        db.biomass_smoke_reference.title,
                                        db.biomass_smoke_event.place,
+                                       db.biomass_smoke_event.place_other,                                       
                                        db.biomass_smoke_event.min_date,
                                        db.biomass_smoke_event.event_type
                                        ],

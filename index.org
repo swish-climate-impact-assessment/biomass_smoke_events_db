@@ -160,7 +160,6 @@ Return to db.py to set migrate to migrate=False
 
   fake_migrate_all = True, migrate = False)
     
-
 ** fixing postgres after mods to sqlite
 in pgadmin rename the orig as today date
 
@@ -223,6 +222,88 @@ GRANT ALL ON TABLE public.biomass_smoke_event TO w2p_user;
 GRANT ALL ON TABLE public.biomass_smoke_event TO ivan_hanigan;
 
 
+** TODO sqlite-code for murray turner update 
+#+name:sqlite
+#+begin_src R :session *R* :tangle no :exports none :eval no
+  #### name:sqlite ####
+  library(RSQLite)
+  drv <- dbDriver("SQLite")
+  con <- dbConnect(drv, dbname = "/home/ivan_hanigan/Dropbox/projects_environment_general_transfers/Biomass_Smoke_Validated_Events/zipped database/web2py/applications/biomass_smoke_events_db/databases/storage.sqlite")
+  dbListTables(con)
+  
+  qc1 <- dbGetQuery(con , "select max(id) from biomass_smoke_reference")
+  qc1
+  qc1 <- dbGetQuery(con , "select * from biomass_smoke_reference where id = 796")
+  t(qc1)
+  
+  
+  qc1 <- dbGetQuery(con , "select max(biomass_smoke_reference_id) from biomass_smoke_event")
+  qc1
+  qc1 <- dbGetQuery(con , "select * from biomass_smoke_event where biomass_smoke_reference_id >= 794")
+  qc1[!is.na(qc1$biomass_smoke_reference_id),1:2]
+  qc1[qc1[,2] == 796,]
+  # wrong, done by hand and report
+#+end_src
+* upgrade devel sqlite based on pgis
+
+#+name:sqlite
+#+begin_src R :session *R* :tangle no :exports none :eval no
+  #### name:sqlite ####
+  # out with the old
+  library(RSQLite)
+  drv <- dbDriver("SQLite")
+  con <- dbConnect(drv, dbname = "~/tools/web2py/applications/biomass_smoke_events_db/databases/storage.sqlite")
+  dbListTables(con)
+  
+  #dbSendQuery(con, "drop table temp")
+  
+  dbSendQuery(con, "delete from biomass_smoke_reference")
+  
+  
+  # in with the new
+  library(swishdbtools)
+  ch <- connect2postgres2("ewedb_staging")
+  datref <- dbGetQuery(ch, "select * from biomass_smoke_reference")
+  str(datref)
+  datevent <- dbGetQuery(ch, "select * from biomass_smoke_event")
+  
+  dbWriteTable(con, "temp", datref)
+  
+  
+  paste(names(datref), sep = "", collapse = ", ")
+  dbSendQuery(con, "insert into biomass_smoke_reference (
+  id, source, title, year, credentials, credentials_other, authors, volume, url, summary, abstract, protocol_used, contributor
+  )
+   select
+  id, source, title, year, credentials, credentials_other, authors, volume, url, summary, abstract, protocol_used, contributor
+  from temp")
+  
+  
+  # now events
+  qc1 <- dbGetQuery(con , "select * from biomass_smoke_event")
+  nrow(qc1)
+  str(qc1)
+  dbSendQuery(con , "delete from biomass_smoke_event")
+  
+  dbSendQuery(con, "drop table temp")
+  str(datevent)
+  datevent$min_date  <- as.character(datevent$min_date)
+  datevent$max_date  <- as.character(datevent$max_date)
+  
+  dbWriteTable(con, "temp", datevent)
+  
+  
+  paste(names(datevent), sep = "", collapse = ", ")
+  
+  dbSendQuery(con, "insert into biomass_smoke_event (
+  id, biomass_smoke_reference_id, place, place_other, event_type, min_date, max_date, burn_area_ha, met_conditions
+  )
+   select
+  id, biomass_smoke_reference_id, place, place_other, event_type, min_date, max_date, burn_area_ha, met_conditions
+  from temp")
+
+#+end_src
+
 
 * TODO-List
 ** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
@@ -274,12 +355,7 @@ DONE final step is to email Ivan. and if not that is fine but the expectation is
 ** DONE add contributer name to references
 ** DONE add endnote refs in style, and grant refs
 ** DONE make changes to the protocols page, bring in sync with manuscript, and the manuscript link is to an old pdf in /static
-
-** TODO add farhad's melbourne
-** TODO what is procedure for deploy to sqlite db?
-** TODO decommission ANU site, make all references to the github, make landing page that says go to github
-** TODO the github landing page is source code, gh-pages needs edit or removal
-** TODO affiliations and  (geoff UCRH)
+** DONE affiliations and  (geoff UCRH)
 Postdoctoral research fellow
 University Centre for Rural Health,
 Sydney Medical School,
@@ -292,11 +368,16 @@ Spatial Epidemiology Group,
 Centre for Research and Action in Public Health,
 Health Research Institute,
 University of Canberra, Canberra, ACT, Australia
-** TODO find better place for contributions than readme
+** DONE find better place for contributions than readme
 # Contriubitions
 
 - 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
+
+** DONE add all prior contributors, and farhad's melbourne, murrays canberra
+** TODO what is procedure for deploy postgres master to sqlite develop and then origi master db?
 ** TODO note that when merging develop with master need to ensure that downloaders use sqlite
+** TODO decommission ANU site, make all references to the github, make landing page that says go to github
+** TODO the github landing page is source code, gh-pages needs edit or removal
 * manuscript DEPRECATED NOW I FINISHED IN WORD
 ** go manuscript run-able R
 #+begin_src R :session *R* :tangle static/manuscript/go_manuscript.R :exports none :padline no :eval yes 
