@@ -97,6 +97,7 @@ db.define_table(
     Field('url', 'string', comment= 'Desirable. This can be URL, doi or weblink of any kind (and date accessed). Also you might want to add the folder location on your computer and the file name.'),
     Field('summary', 'text', comment= 'Short summary written by you.'),
     Field('abstract', 'text', comment= 'Executive summary copied from the journal/report abstract.'),
+    Field('contributor', 'string', comment='The contributor of this reference information.'),    
     format = '%(source)s %(id)s' 
     )
 
