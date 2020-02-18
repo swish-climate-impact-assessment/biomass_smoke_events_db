@@ -1,10 +1,424 @@
-#+TITLE:Biomass smoke events database 
-#+AUTHOR: Ivan Hanigan
-#+email: ivan.hanigan@anu.edu.au
-#+LaTeX_CLASS: article
-#+LaTeX_CLASS_OPTIONS: [a4paper]
-#+LATEX: \tableofcontents
+#+TITLE:BIOMASS SMOKE EVENTS DATABASE 
+#+AUTHOR: IVAN HANIGAN
+#+EMAIL: IVAN.HANIGAN@ANU.EDU.AU
+#+LATEX_CLASS: ARTICLE
+#+LATEX_CLASS_OPTIONS: [A4PAPER]
+#+LATEX: \TABLEOFCONTENTS
 -----
+
+* TODO-List
+** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
+** DONE landing DB page dot 4 "to enter new data go and register in top right"  remove email ivan.
+this becomes dot 5, dot 4 becomes manuscript flesh out dot 
+say step 1 register
+step 2 add a reference [at this link]
+step 3 add dates [at this link]    
+** DONE revise readme
+** WONTDO make downloaded version not require log in
+** DONE disable the URL for install.R (also this is security risk)
+** DONE C:/Temp is temporary, suggest the user move these before they start.
+instruction to go into project folder and double click the w2p.cmd
+you can go to events page, at bottom export to csv
+** DONE make protocol landing page invite users to select a protocol
+a) Johnston, b) Farhad, c) bare minimun and d) suggest their own
+bare min is just
+step 1 get any reference
+step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
+step 3 go to web2py data entry form 
+
+** DONE general things found when Murray add a reference
+DONE source is compulsory, authors is optional
+DONE title compulsory
+DONE volume optional
+DONE general location means geographical location? optional? remove this.
+DONE Desirable. This can be URL, doi or weblink of any kind (and date accessed). Also you might want to add the folder location on your computer and the file name.
+DONE optional summary (this is what you think of it)
+DONE optional abstract (this is the author thought of it)
+DONE spell it out somewhere that you can sort descending by clicking ID (twice)
+DONE then the 'biomass smoke events' link is where to go to Add an Event.
+
+Adding events TODO how to add a new place?
+DONE - place add an Other option
+DONE - then under that is a free text place.
+
+WONTDO min date, start date?
+WONTDO max date, end date?
+no this is ok
+
+make it clear what is compulsory
+
+DONE final step is to email Ivan. and if not that is fine but the expectation is to cite the data (the github)
+
+** DONE make for both postgres, dev and master sqlite a user 'visitor@visitor.org', visitor
+** DONE make changes into the postgres tables
+** DONE fix postgres tables.  Try this with backup tables, create shell then insert data.?  or can this happen without insert record?
+** DONE add DMJS Bowman as author
+** DONE add contributer name to references
+** DONE add endnote refs in style, and grant refs
+** DONE make changes to the protocols page, bring in sync with manuscript, and the manuscript link is to an old pdf in /static
+** DONE affiliations and  (geoff UCRH)
+Postdoctoral research fellow
+University Centre for Rural Health,
+Sydney Medical School,
+University of Sydney, Sydney, NSW, Australia
+
+And
+
+Data Scientist
+Spatial Epidemiology Group,
+Centre for Research and Action in Public Health,
+Health Research Institute,
+University of Canberra, Canberra, ACT, Australia
+** DONE find better place for contributions than readme
+# Contriubitions
+
+- 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
+
+** DONE add all prior contributors, and farhad's melbourne, murrays canberra
+** TODO what is procedure for deploy postgres master to sqlite develop and then origi master db?
+** TODO note that when merging develop with master need to ensure that downloaders use sqlite
+** TODO decommission ANU site, make all references to the github, make landing page that says go to github
+** TODO the github landing page is source code, gh-pages needs edit or removal
+
+** TODO new manuscript from Murray
+*** email from murray 
+
+
+---------- Forwarded message ---------
+From: Murray.Turner <Murray.Turner@canberra.edu.au>
+Date: Tue, Jun 26, 2018 at 4:13 PM
+Subject: RE: Biomass smoke events database
+To: Ivan.Hanigan <Ivan.Hanigan@canberra.edu.au>
+Cc: ivan.hanigan@sydney.edu.au <ivan.hanigan@sydney.edu.au>
+
+
+Hi Ivan,
+
+ 
+
+I’ve finished editing the manuscript using the “Fire” journal template.
+
+ 
+
+Copy attached.
+
+ 
+
+Can you cast your eye over it and suggest any changes?
+
+ 
+
+I’ve highlighted your contact details, which you may/may not wish to update.
+
+ 
+
+I will also email you an updated EndNote Library that could be sent with the manuscript as an attachment.
+
+ 
+
+Don’t forget, if it is accepted and we do need to pay an article processing fee, I can get the money from the ANDS grant.
+
+ 
+
+Cheers,
+
+ 
+
+Murray
+
+ 
+
+From: Ivan.Hanigan 
+Sent: Wednesday, 23 May 2018 9:00 AM
+To: Murray.Turner <Murray.Turner@canberra.edu.au>
+Cc: ivan.hanigan@sydney.edu.au
+Subject: Re: Biomass smoke events database
+
+ 
+
+ 
+
+Hi Murray,
+
+I hope you are well?
+
+I have changed jobs since last time we spoke and now work full time for Uni Sydney with a visiting fellowship at Uni Canberra (so I still live in ACT, but have to do a lot of travel).
+
+I kept meaning to submit the biomass smoke database paper but felt it just does not really fit the Sci Reports mold very well.
+
+ 
+
+I wonder if you have time and are willing to revise the manuscript for the journal "Fire"?
+
+http://www.mdpi.com/journal/fire
+
+It is more suitable for the paper, is open access and has 'free publication for well-prepared manuscripts submitted in 2017.'
+
+http://www.mdpi.com/journal/fire/instructions
+
+We can submit this as a "Data Descriptor and Technical Notes: containing a description of a data set, including methods used for collecting or producing the data, where the data set may be found, and information about its use. Technical notes can include detailed descriptions of equipment operations, field methods, models, and monitoring method’s."
+
+Sorry to burden you but I just don't seem to be able to make the time.
+
+ 
+
+Kind regards,
+
+Ivan
+
+ 
+
+PS my new contact details:
+
+Ivan Hanigan PhD
+
+Data Scientist (Epidemiology)
+
+University Centre for Rural Health
+
+School of Public Health
+
+University of Sydney
+
+ 
+
+Ph: 0428 265 976
+
+Email: ivan.hanigan@sydney.edu.au
+
+ 
+
+ 
+
+From: Murray.Turner
+Sent: Friday, 4 August 2017 12:44 PM
+To: Ivan.Hanigan; Fay Johnston; Geoff.Morgan@ucrh.edu.au; david.bowman@utas.edu.au; grant.williamson@utas.edu.au; Farhad Salimi; sarah.henderson@ubc.ca
+Subject: FW: Biomass smoke events database
+
+ 
+
+Hi Ivan,
+
+ 
+
+I have read through the manuscript and made a few suggestions based on the Nature Scientific Reports submission checklist .
+
+ 
+
+I have also written the opening paragraph for the Discussion section.  I hope it’s okay – very happy to change it if I’m off track.
+
+ 
+
+Regards,
+
+ 
+
+Murray
+
+ 
+
+From: Ivan.Hanigan 
+Sent: Tuesday, 1 August 2017 12:07 PM
+To: Murray.Turner; Fay Johnston; Geoff.Morgan@ucrh.edu.au; david.bowman@utas.edu.au; grant.williamson@utas.edu.au; Farhad Salimi; sarah.henderson@ubc.ca
+Subject: Biomass smoke events database
+
+ 
+
+Hi all,
+
+What do you think about putting this revised manuscript in to Nature Scientific Reports?
+
+ 
+
+https://www.nature.com/srep/publish/guidelines
+
+ 
+
+Can you please let me know in the next week or so?
+
+Thanks Ivan.
+
+ 
+
+ 
+
+ 
+
+From: Ivan.Hanigan 
+Sent: Saturday, 8 July 2017 11:27 AM
+To: Fay Johnston; Geoff.Morgan@ucrh.edu.au; david.bowman@utas.edu.au; grant.williamson@utas.edu.au; Murray.Turner; Farhad Salimi; sarah.henderson@ubc.ca
+Subject: Fw: Decision on your submission to BMC Research Notes -RESN-D-17-00543
+
+ 
+
+ 
+
+FYI, rejected due to inability to find reviewers in the field. I think the suggestions are good and easy enough to make changes.
+
+Send me any thoughts of another Journal?
+
+From: em.resn.0.54602a.866dc6ed@editorialmanager.com <em.resn.0.54602a.866dc6ed@editorialmanager.com> on behalf of BMC Research Notes - Editorial Office <em@editorialmanager.com>
+Sent: Saturday, 8 July 2017 12:12 AM
+To: Ivan.Hanigan
+Subject: Decision on your submission to BMC Research Notes -RESN-D-17-00543
+
+ 
+
+RESN-D-17-00543
+Extensible database of validated biomass smoke events for health research
+Ivan Charles Hanigan, PhD; Geoffrey G Morgan,, PhD; Grant J Williamson, PhD; Farhad Salimi, PhD; Sarah B Henderson,, PhD; Murray R Turner; David M. J. S. Bowman, PhD; Fay H Johnston, PhD
+BMC Research Notes
+
+Dear Dr Hanigan,
+
+Thank you for considering BMC Research Notes for your manuscript (above). I am sorry to inform you that despite much effort we have been unable to obtain appropriate referees for your manuscript. We are therefore handing it back to you and we are closing your file, so that you may submit it elsewhere. We wish you all the best in finding an alternative venue for your research.
+
+While we regret that we have had to come to this decision, it does seem likely to us that a more specialized journal may have better luck in identifying reviewers.
+
+Below you will find the editorial summary from one of our PhD-level qualified manuscript assessors. While we do not feel able to make a decision on whether your manuscript is publishable based on this report, we hope it will be of use when submitting your manuscript elsewhere.
+
+I wish you every success with your research and hope that you will consider us again in the future.
+
+Best wishes,
+
+Dirk Krüger
+BMC Research Notes
+https://bmcresnotes.biomedcentral.com/
+
+
+
+BMC Research Notes | Home page
+
+bmcresnotes.biomedcentral.com
+
+BMC Research Notes publishes scientifically valid research outputs that cannot be considered as full research or methodology articles. We support the research ...
+
+
+
+
+
+
+
+
+Reviewer reports:
+Reviewer 1: "PEER REVIEWER COMMENTS: No academic peer reviewer available.
+
+EDITORIAL STAFF COMMENTS REGARDING REPORTING STANDARDS: Summary: This paper describes the creation of a database that collects evidence linking historical spikes in air pollution with smoke from vegetation fires. Additionally, the authors describe how the database has been extended to be distributed in an open format that allows the research community to add to the history of these events. Research question: There is a clear research question, and the authors have assessed it adequately. The authors thoroughly describe why the data were obtained and provide citations to support the relevance of this paper's aims. Nonetheless, in the Introduction, the authors should provide more information about where the data (that is included in the database studied) come from. Who enters the data? Who maintains and cleans the database? The authors state that this study describes how the database has been extended to be distributed in an open format; what was the prior format? How wide of
+an area did it previously cover, and how available was it previously? Methods: The authors provide thorough information on the protocols used to include information in the database. The authors state that the "Bare Minimum Protocol was developed for this paper", but it is unclear how and why this protocol was created and adapted for use in the current database. They also state that any of the above mentioned protocols can be used, or the database contributor can use his/her own protocol, but it is unclear how consistency in data entry is ensured by allowing variations in contributors' choice of protocol. Results: Overall, the diagram presented in Figure 1 is helpful in visualizing the process of utilizing the database and system. However, it is unclear why the flow of the diagram is at a diagonal slant. The flow and direction of activities described would be clearer in a horizontal or vertical presentation. Additionally, it is unclear why the majority of arrows are blue,
+while two arrows are green. Is there significance in the color designation? Conclusions and recommendations: Overall, the authors provide useful information and descriptions of the database used to identify historical spikes in particulate matter concentrations and evaluate whether they are caused by vegetation fire smoke or by other means. Nonetheless, the authors should consider tying the Results and Conclusions back to the citations presented in the Introduction more clearly to illustrate the relevance and need for this paper. Additionally, the authors present a description of the database and its expanded form, but they do not present any discussion of testing this expanded form. Do the authors intend to test it to ensure its effectiveness in capturing necessary data? It is unclear what the future direction or applicability of this paper is, and the authors should make that clearer. In general, this paper seems useful, and with additional information added, it may be
+suitable for publication. The language quality is sufficient for further consideration or publication."
+
+
+
+
+
+
+
+If improvements to the English language within your manuscript have been requested we recommend that you address this before submitting to another journal. We recommend that you either get your manuscript reviewed by someone who is fluent in English or, if you would like professional help, you can use any reputable English language editing service. We can recommend our affiliates Nature Research Editing Service (http://bit.ly/NRES_BS) and American Journal Experts (http://bit.ly/AJE_BS) for help with English usage. Please note that use of an editing service is neither a requirement nor a guarantee of publication. Free assistance is available from our English language tutorial (https://www.springer.com/gb/authors-editors/authorandreviewertutorials/writinginenglish) and our Writing resources (http://www.biomedcentral.com/getpublished/writing-resources). These cover common mistakes that occur when writing in English.
+
+
+
+Author and Reviewer Tutorials - Writing in English | Springer
+
+www.springer.com
+
+ 
+
+ 
+
+AJE - Editing, Formatting, Translation and Illustration Services for scientific researchers by academic experts | AJE | American Journal Experts
+
+bit.ly
+
+AJE helps research break through with top-quality author services from experienced academics. We can help prepare your manuscript, figures, posters, and more.
+
+ 
+
+Writing resources - BioMed Central
+
+www.biomedcentral.com
+
+Welcome to BioMed Central’s writing resources, a guide on writing and publishing a scientific manuscript. You can use the links to the left or below to find advice ...
+
+ 
+
+English Language Editing | Author services from Springer Nature
+
+bit.ly
+
+English Editing from Nature Research ✯ Corrects your language errors ✯ Expert editors in your subject area ✯ All academic text, including research papers
+** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
+** DONE landing DB page dot 4 "to enter new data go and register in top right"  remove email ivan.
+this becomes dot 5, dot 4 becomes manuscript flesh out dot 
+say step 1 register
+step 2 add a reference [at this link]
+step 3 add dates [at this link]    
+** DONE revise readme
+** WONTDO make downloaded version not require log in
+** DONE disable the URL for install.R (also this is security risk)
+** DONE C:/Temp is temporary, suggest the user move these before they start.
+instruction to go into project folder and double click the w2p.cmd
+you can go to events page, at bottom export to csv
+** DONE make protocol landing page invite users to select a protocol
+a) Johnston, b) Farhad, c) bare minimun and d) suggest their own
+bare min is just
+step 1 get any reference
+step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
+step 3 go to web2py data entry form 
+
+** DONE general things found when Murray add a reference
+DONE source is compulsory, authors is optional
+DONE title compulsory
+DONE volume optional
+DONE general location means geographical location? optional? remove this.
+DONE Desirable. This can be URL, doi or weblink of any kind (and date accessed). Also you might want to add the folder location on your computer and the file name.
+DONE optional summary (this is what you think of it)
+DONE optional abstract (this is the author thought of it)
+DONE spell it out somewhere that you can sort descending by clicking ID (twice)
+DONE then the 'biomass smoke events' link is where to go to Add an Event.
+
+Adding events TODO how to add a new place?
+DONE - place add an Other option
+DONE - then under that is a free text place.
+
+WONTDO min date, start date?
+WONTDO max date, end date?
+no this is ok
+
+make it clear what is compulsory
+
+DONE final step is to email Ivan. and if not that is fine but the expectation is to cite the data (the github)
+
+** DONE make for both postgres, dev and master sqlite a user 'visitor@visitor.org', visitor
+** DONE make changes into the postgres tables
+** DONE fix postgres tables.  Try this with backup tables, create shell then insert data.?  or can this happen without insert record?
+** DONE add DMJS Bowman as author
+** DONE add contributer name to references
+** DONE add endnote refs in style, and grant refs
+** DONE make changes to the protocols page, bring in sync with manuscript, and the manuscript link is to an old pdf in /static
+** DONE affiliations and  (geoff UCRH)
+Postdoctoral research fellow
+University Centre for Rural Health,
+Sydney Medical School,
+University of Sydney, Sydney, NSW, Australia
+
+And
+
+Data Scientist
+Spatial Epidemiology Group,
+Centre for Research and Action in Public Health,
+Health Research Institute,
+University of Canberra, Canberra, ACT, Australia
+** DONE find better place for contributions than readme
+# Contriubitions
+
+- 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
+
+** DONE add all prior contributors, and farhad's melbourne, murrays canberra
+** TODO what is procedure for deploy postgres master to sqlite develop and then origi master db?
+** TODO note that when merging develop with master need to ensure that downloaders use sqlite
+** TODO decommission ANU site, make all references to the github, make landing page that says go to github
+** TODO the github landing page is source code, gh-pages needs edit or removal
 
 * sqlite works
 ** TODO sqlite-code for update to ref table CAREFUL THIS MADE ERROR IN THE 1ST RECORD
@@ -303,81 +717,6 @@ GRANT ALL ON TABLE public.biomass_smoke_event TO ivan_hanigan;
   from temp")
 
 #+end_src
-
-
-* TODO-List
-** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
-** DONE landing DB page dot 4 "to enter new data go and register in top right"  remove email ivan.
-this becomes dot 5, dot 4 becomes manuscript flesh out dot 
-say step 1 register
-step 2 add a reference [at this link]
-step 3 add dates [at this link]    
-** DONE revise readme
-** WONTDO make downloaded version not require log in
-** DONE disable the URL for install.R (also this is security risk)
-** DONE C:/Temp is temporary, suggest the user move these before they start.
-instruction to go into project folder and double click the w2p.cmd
-you can go to events page, at bottom export to csv
-** DONE make protocol landing page invite users to select a protocol
-a) Johnston, b) Farhad, c) bare minimun and d) suggest their own
-bare min is just
-step 1 get any reference
-step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
-step 3 go to web2py data entry form 
-
-** DONE general things found when Murray add a reference
-DONE source is compulsory, authors is optional
-DONE title compulsory
-DONE volume optional
-DONE general location means geographical location? optional? remove this.
-DONE Desirable. This can be URL, doi or weblink of any kind (and date accessed). Also you might want to add the folder location on your computer and the file name.
-DONE optional summary (this is what you think of it)
-DONE optional abstract (this is the author thought of it)
-DONE spell it out somewhere that you can sort descending by clicking ID (twice)
-DONE then the 'biomass smoke events' link is where to go to Add an Event.
-
-Adding events TODO how to add a new place?
-DONE - place add an Other option
-DONE - then under that is a free text place.
-
-WONTDO min date, start date?
-WONTDO max date, end date?
-no this is ok
-
-make it clear what is compulsory
-
-DONE final step is to email Ivan. and if not that is fine but the expectation is to cite the data (the github)
-
-** DONE make for both postgres, dev and master sqlite a user 'visitor@visitor.org', visitor
-** DONE make changes into the postgres tables
-** DONE fix postgres tables.  Try this with backup tables, create shell then insert data.?  or can this happen without insert record?
-** DONE add DMJS Bowman as author
-** DONE add contributer name to references
-** DONE add endnote refs in style, and grant refs
-** DONE make changes to the protocols page, bring in sync with manuscript, and the manuscript link is to an old pdf in /static
-** DONE affiliations and  (geoff UCRH)
-Postdoctoral research fellow
-University Centre for Rural Health,
-Sydney Medical School,
-University of Sydney, Sydney, NSW, Australia
-
-And
-
-Data Scientist
-Spatial Epidemiology Group,
-Centre for Research and Action in Public Health,
-Health Research Institute,
-University of Canberra, Canberra, ACT, Australia
-** DONE find better place for contributions than readme
-# Contriubitions
-
-- 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
-
-** DONE add all prior contributors, and farhad's melbourne, murrays canberra
-** TODO what is procedure for deploy postgres master to sqlite develop and then origi master db?
-** TODO note that when merging develop with master need to ensure that downloaders use sqlite
-** TODO decommission ANU site, make all references to the github, make landing page that says go to github
-** TODO the github landing page is source code, gh-pages needs edit or removal
 * manuscript DEPRECATED NOW I FINISHED IN WORD
 ** go manuscript run-able R
 #+begin_src R :session *R* :tangle static/manuscript/go_manuscript.R :exports none :padline no :eval yes 
