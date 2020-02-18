@@ -1,31 +1,40 @@
-#+TITLE:BIOMASS SMOKE EVENTS DATABASE 
-#+AUTHOR: IVAN HANIGAN
-#+EMAIL: IVAN.HANIGAN@ANU.EDU.AU
+#+TITLE: Biomass smoke events database 
+#+AUTHOR: ivan hanigan
+#+EMAIL: ivan.hanigan@sydney.edu.au
 #+LATEX_CLASS: ARTICLE
 #+LATEX_CLASS_OPTIONS: [A4PAPER]
 #+LATEX: \TABLEOFCONTENTS
 -----
 
 * TODO-List
-** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
-** DONE landing DB page dot 4 "to enter new data go and register in top right"  remove email ivan.
-this becomes dot 5, dot 4 becomes manuscript flesh out dot 
-say step 1 register
-step 2 add a reference [at this link]
-step 3 add dates [at this link]    
-** DONE revise readme
-** WONTDO make downloaded version not require log in
-** DONE disable the URL for install.R (also this is security risk)
+** DONE add all prior contributors, and farhad's melbourne, murrays canberra
+** DONE add contributer name to references
+** DONE add DMJS Bowman as author
+** DONE add endnote refs in style, and grant refs
+** DONE affiliations and  (geoff UCRH)
+Postdoctoral research fellow
+University Centre for Rural Health,
+Sydney Medical School,
+University of Sydney, Sydney, NSW, Australia
+
+And
+
+Data Scientist
+Spatial Epidemiology Group,
+Centre for Research and Action in Public Health,
+Health Research Institute,
+University of Canberra, Canberra, ACT, Australia
 ** DONE C:/Temp is temporary, suggest the user move these before they start.
 instruction to go into project folder and double click the w2p.cmd
 you can go to events page, at bottom export to csv
-** DONE make protocol landing page invite users to select a protocol
-a) Johnston, b) Farhad, c) bare minimun and d) suggest their own
-bare min is just
-step 1 get any reference
-step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
-step 3 go to web2py data entry form 
+** TODO decommission ANU site, make all references to the github, make landing page that says go to github
+** DONE disable the URL for install.R (also this is security risk)
+** DONE find better place for contributions than readme
+# Contriubitions
 
+- 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
+
+** DONE fix postgres tables.  Try this with backup tables, create shell then insert data.?  or can this happen without insert record?
 ** DONE general things found when Murray add a reference
 DONE source is compulsory, authors is optional
 DONE title compulsory
@@ -49,36 +58,20 @@ make it clear what is compulsory
 
 DONE final step is to email Ivan. and if not that is fine but the expectation is to cite the data (the github)
 
-** DONE make for both postgres, dev and master sqlite a user 'visitor@visitor.org', visitor
+** DONE landing DB page dot 4 "to enter new data go and register in top right"  remove email ivan.
+this becomes dot 5, dot 4 becomes manuscript flesh out dot 
+say step 1 register
+step 2 add a reference [at this link]
+step 3 add dates [at this link]    
 ** DONE make changes into the postgres tables
-** DONE fix postgres tables.  Try this with backup tables, create shell then insert data.?  or can this happen without insert record?
-** DONE add DMJS Bowman as author
-** DONE add contributer name to references
-** DONE add endnote refs in style, and grant refs
 ** DONE make changes to the protocols page, bring in sync with manuscript, and the manuscript link is to an old pdf in /static
-** DONE affiliations and  (geoff UCRH)
-Postdoctoral research fellow
-University Centre for Rural Health,
-Sydney Medical School,
-University of Sydney, Sydney, NSW, Australia
-
-And
-
-Data Scientist
-Spatial Epidemiology Group,
-Centre for Research and Action in Public Health,
-Health Research Institute,
-University of Canberra, Canberra, ACT, Australia
-** DONE find better place for contributions than readme
-# Contriubitions
-
-- 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
-
-** DONE add all prior contributors, and farhad's melbourne, murrays canberra
-** TODO what is procedure for deploy postgres master to sqlite develop and then origi master db?
-** TODO note that when merging develop with master need to ensure that downloaders use sqlite
-** TODO decommission ANU site, make all references to the github, make landing page that says go to github
-** TODO the github landing page is source code, gh-pages needs edit or removal
+** DONE make for both postgres, dev and master sqlite a user 'visitor@visitor.org', visitor
+** DONE make protocol landing page invite users to select a protocol
+a) Johnston, b) Farhad, c) bare minimun and d) suggest their own
+bare min is just
+step 1 get any reference
+step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
+step 3 go to web2py data entry form 
 
 ** TODO new manuscript from Murray
 *** email from murray 
@@ -347,79 +340,13 @@ English Language Editing | Author services from Springer Nature
 bit.ly
 
 English Editing from Nature Research ✯ Corrects your language errors ✯ Expert editors in your subject area ✯ All academic text, including research papers
-** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
-** DONE landing DB page dot 4 "to enter new data go and register in top right"  remove email ivan.
-this becomes dot 5, dot 4 becomes manuscript flesh out dot 
-say step 1 register
-step 2 add a reference [at this link]
-step 3 add dates [at this link]    
-** DONE revise readme
-** WONTDO make downloaded version not require log in
-** DONE disable the URL for install.R (also this is security risk)
-** DONE C:/Temp is temporary, suggest the user move these before they start.
-instruction to go into project folder and double click the w2p.cmd
-you can go to events page, at bottom export to csv
-** DONE make protocol landing page invite users to select a protocol
-a) Johnston, b) Farhad, c) bare minimun and d) suggest their own
-bare min is just
-step 1 get any reference
-step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
-step 3 go to web2py data entry form 
-
-** DONE general things found when Murray add a reference
-DONE source is compulsory, authors is optional
-DONE title compulsory
-DONE volume optional
-DONE general location means geographical location? optional? remove this.
-DONE Desirable. This can be URL, doi or weblink of any kind (and date accessed). Also you might want to add the folder location on your computer and the file name.
-DONE optional summary (this is what you think of it)
-DONE optional abstract (this is the author thought of it)
-DONE spell it out somewhere that you can sort descending by clicking ID (twice)
-DONE then the 'biomass smoke events' link is where to go to Add an Event.
-
-Adding events TODO how to add a new place?
-DONE - place add an Other option
-DONE - then under that is a free text place.
-
-WONTDO min date, start date?
-WONTDO max date, end date?
-no this is ok
-
-make it clear what is compulsory
-
-DONE final step is to email Ivan. and if not that is fine but the expectation is to cite the data (the github)
-
-** DONE make for both postgres, dev and master sqlite a user 'visitor@visitor.org', visitor
-** DONE make changes into the postgres tables
-** DONE fix postgres tables.  Try this with backup tables, create shell then insert data.?  or can this happen without insert record?
-** DONE add DMJS Bowman as author
-** DONE add contributer name to references
-** DONE add endnote refs in style, and grant refs
-** DONE make changes to the protocols page, bring in sync with manuscript, and the manuscript link is to an old pdf in /static
-** DONE affiliations and  (geoff UCRH)
-Postdoctoral research fellow
-University Centre for Rural Health,
-Sydney Medical School,
-University of Sydney, Sydney, NSW, Australia
-
-And
-
-Data Scientist
-Spatial Epidemiology Group,
-Centre for Research and Action in Public Health,
-Health Research Institute,
-University of Canberra, Canberra, ACT, Australia
-** DONE find better place for contributions than readme
-# Contriubitions
-
-- 2016-03-17: Events contributed by Dr Salimi, UTAS, using Satellite-Only protocol and a variation of APHEA imputation procedures.
-
-** DONE add all prior contributors, and farhad's melbourne, murrays canberra
-** TODO what is procedure for deploy postgres master to sqlite develop and then origi master db?
 ** TODO note that when merging develop with master need to ensure that downloaders use sqlite
-** TODO decommission ANU site, make all references to the github, make landing page that says go to github
+** DONE revise readme
 ** TODO the github landing page is source code, gh-pages needs edit or removal
 
+** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
+** TODO what is procedure for deploy postgres master to sqlite develop and then origi master db?
+** WONTDO make downloaded version not require log in
 * sqlite works
 ** TODO sqlite-code for update to ref table CAREFUL THIS MADE ERROR IN THE 1ST RECORD
 #+name:sqlite
