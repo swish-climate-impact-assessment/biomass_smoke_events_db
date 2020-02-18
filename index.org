@@ -5,7 +5,7 @@
 #+LATEX_CLASS_OPTIONS: [A4PAPER]
 #+LATEX: \TABLEOFCONTENTS
 -----
-
+NB make for both postgres, dev and master sqlite a user 'visitor@visitor.org', visitor
 * TODO-List
 ** DONE add all prior contributors, and farhad's melbourne, murrays canberra
 ** DONE add contributer name to references
@@ -27,7 +27,6 @@ University of Canberra, Canberra, ACT, Australia
 ** DONE C:/Temp is temporary, suggest the user move these before they start.
 instruction to go into project folder and double click the w2p.cmd
 you can go to events page, at bottom export to csv
-** TODO decommission ANU site, make all references to the github, make landing page that says go to github
 ** DONE disable the URL for install.R (also this is security risk)
 ** DONE find better place for contributions than readme
 # Contriubitions
@@ -73,7 +72,7 @@ step 1 get any reference
 step 2 get as much bibliographical as possible e.g. author, title, publisher, year, URL, date Accessed
 step 3 go to web2py data entry form 
 
-** TODO new manuscript from Murray
+** DONE new manuscript from Murray
 *** email from murray 
 
 
@@ -340,13 +339,92 @@ English Language Editing | Author services from Springer Nature
 bit.ly
 
 English Editing from Nature Research ✯ Corrects your language errors ✯ Expert editors in your subject area ✯ All academic text, including research papers
-** TODO note that when merging develop with master need to ensure that downloaders use sqlite
 ** DONE revise readme
-** TODO the github landing page is source code, gh-pages needs edit or removal
 
 ** DONE this needs to pick out a lot of stuff from the manuscript on the R package Repo, I am seperating the R pack (tools) from this repo (data and report/manuscript)
-** TODO what is procedure for deploy postgres master to sqlite develop and then origi master db?
+** DONE note that when merging develop with master need to ensure that downloaders use sqlite
 ** WONTDO make downloaded version not require log in
+** DONE remove the develop branch
+** TODO the github landing page is source code, gh-pages needs edit or removal
+** TODO decommission ANU site, make all references to the github, make landing page that says go to github
+** TODO what is procedure for deploy postgres master to sqlite develop and then origi master db?
+** TODO procedure to upload locations and to update locations with new ones
+** TODO rewrite script get_events_and_timeseries.R (direct to R, not in orgmode)
+** TODO snip qc from get events
+# NB there is an issue when selecting days above 95% but with NA LFS
+#            date pm10pct_lag0 lfs_pm10_lag0
+# 7282 2013-12-08   0.76670318             0
+# 7283 2013-12-09   0.95228642            NA
+# 7284 2013-12-10   0.60460022             0
+** TODO sqlite doesn't increment the ref id
+## 2020-02-18 there was a difference with Williamson at end of 2013, and this is
+## in Horsley too
+qc <- extracted[extracted$date >= as.Date("2013-01-01") &
+          extracted$date <= as.Date("2013-12-31"),
+          c("date", "pm25_lag0", "lfs_event", "pm25pct_lag0")]
+qc[qc$pm25_lag0 > 25,]
+qc[qc$pm25pct_lag0 >= 0.95,]
+## yep so the 21st is not identified but is obviously the big one.
+## I will add this
+## TODO need to come back to this month and check the other high days,
+## there was also a notable prescribed burn overnight on 21/22 october
+## written about in wikipedia
+
+## ok now make the plot again
+with(extracted, plot(date, pm25_lag0, type = "l", ylim = c(0, 100)))
+points(
+  extract[extracted$lfs_pm25_lag0 == 1, "date"]
+                   ,
+  extract[extracted$lfs_pm25_lag0 == 1, "pm25_lag0"]
+                   , col = 'red', pch = 16, cex = .7
+  )
+
+## Horsley found A total of 184 LFS days (2001-2013)
+
+############################################
+
+qc[qc$contributor== "Dr Ivan Hanigan",]
+    id          source               title year credentials credentials_other
+701 NA modis rapidfire smoke plume visible 2013 modis smoke                  
+702 NA modis rapidfire smoke plume visible 2013 modis smoke                  
+           authors volume url summary
+701 Satellite Data     NA            
+702 Satellite Data     NA            
+                                                             abstract
+701 Ivan submitted this to append data to those identified by Farhad.
+702                             Ivan added to append to Farhad's work
+
+
+dbGetQuery(ch,"select * from biomass_smoke_reference where abstract like 'Ivan added%'")
+dbGetQuery(ch,"select max(id) from biomass_smoke_reference")
+799
+dbSendQuery(ch, "UPDATE biomass_smoke_reference
+   SET id = 800 
+ WHERE abstract like 'Ivan added%'")
+
+# can use the same ref for many events (but note that cannot use the rapidfire URL this way)
+dbGetQuery(ch,"select * from biomass_smoke_reference where abstract like 'Ivan submitted%'")
+
+dbSendQuery(ch, "delete from biomass_smoke_reference
+ WHERE abstract like 'Ivan submitted")
+
+## and now the event is also a problem
+dbGetQuery(ch,"select max(id) from biomass_smoke_event")
+1467
+names(dbGetQuery(ch,"select * from biomass_smoke_event"))
+dbSendQuery(ch, "insert into biomass_smoke_event (
+ id,                         biomass_smoke_reference_id,
+ place,                      
+ event_type,                 min_date)
+values (1468, 800, 'Sydney East', 'bushfire', '2013-10-21')
+")
+# woops string to float??
+# dbSendQuery(ch, "delete from biomass_smoke_event where id = 1468")
+** TODO update the spatial data name for Illawara to Illawarra
+dbSendQuery(ch, "UPDATE pollution_stations_combined_final
+   SET region = 'Illawarra'
+ WHERE region = 'Illawara'")
+
 * sqlite works
 ** TODO sqlite-code for update to ref table CAREFUL THIS MADE ERROR IN THE 1ST RECORD
 #+name:sqlite
@@ -562,7 +640,6 @@ ALTER TABLE public.biomass_smoke_event
 GRANT ALL ON TABLE public.biomass_smoke_event TO w2p_user;
 GRANT ALL ON TABLE public.biomass_smoke_event TO ivan_hanigan;
 
-
 ** TODO sqlite-code for murray turner update 
 #+name:sqlite
 #+begin_src R :session *R* :tangle no :exports none :eval no
@@ -585,6 +662,52 @@ GRANT ALL ON TABLE public.biomass_smoke_event TO ivan_hanigan;
   qc1[qc1[,2] == 796,]
   # wrong, done by hand and report
 #+end_src
+
+** TODO upload the locations for pollution stations from prior works 
+#+begin_src R :session *R* :tangle no :exports none :eval no
+  library(RSQLite)
+  drv <- dbDriver("SQLite")
+  ch <- dbConnect(drv, dbname = "databases/storage.sqlite")
+  dbListTables(ch)
+
+  input_orig_data <- F
+  if(input_orig_data){
+  indat <- foreign::read.dbf("/home/Environment_General/Biomass_Smoke_Validated_Events/biosmoke_pollution/data_provided/pollution_stations_combined_final.dbf", as.is = T)
+  str(indat)
+  indat$the_geom <- NULL
+  #dbSendQuery(ch, "drop table pollution_stations_combined_final")
+  dbWriteTable(ch, "pollution_stations_combined_final", indat, row.names = F)
+  }
+
+  ## QC
+  qc <- dbGetQuery(ch, "select *
+  from pollution_stations_combined_final")
+  str(qc)
+
+  qc <- dbGetQuery(ch, "
+  select * from pollution_stations_combined_final where
+          region like 'Sydney%'
+  ")
+  qc
+
+  qc <- dbGetQuery(ch, "select t1.region as studysite, date, avg(pm25_av) as pm2p5
+  from
+  (select * from pollution_stations_combined_final where
+          region like 'Sydney%') t1
+  left join combined_pollutants t2
+  on t1.site = t2.site
+  group by region, date
+  ")
+  head(qc)
+  summary(qc)
+  tail(qc)
+  qc$date <- as.Date(qc$date)
+  with(qc, plot(date, pm2p5, type = "l", col = 'grey', ylim = c(0,110)))
+  with(qc, lines(lowess(pm2p5 ~ date, f = 0.01)))
+  segments(as.Date('2009-01-01'), 0, as.Date('2009-01-01'), 200, col = 'red')
+
+#+end_src
+
 * upgrade devel sqlite based on pgis
 
 #+name:sqlite
