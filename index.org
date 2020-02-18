@@ -403,6 +403,8 @@ dbSendQuery(ch, "UPDATE biomass_smoke_reference
  WHERE abstract like 'Ivan added%'")
 
 # can use the same ref for many events (but note that cannot use the rapidfire URL this way)
+##  https://wvs.earthdata.nasa.gov/api/v1/snapshot?REQUEST=GetSnapshot&LAYERS=MODIS_Terra_CorrectedReflectance_TrueColor,MODIS_Terra_Thermal_Anomalies_Day,Reference_Features&CRS=EPSG:4326&TIME=2013-10-21&WRAP=DAY,DAY,X&BBOX=-35,149,-32,153&FORMAT=image/jpeg&WIDTH=1820&HEIGHT=1365&AUTOSCALE=TRUE&ts=1582033681704
+
 dbGetQuery(ch,"select * from biomass_smoke_reference where abstract like 'Ivan submitted%'")
 
 dbSendQuery(ch, "delete from biomass_smoke_reference

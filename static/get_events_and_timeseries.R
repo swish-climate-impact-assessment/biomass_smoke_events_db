@@ -7,11 +7,6 @@ qc  <- dbGetQuery(ch , "select * from biomass_smoke_reference")
 str(qc)
 qc2  <- dbGetQuery(ch , "select * from biomass_smoke_event")
 
-##projdir <- "Q:/Research/Environment_General/Biomass_Smoke_Validated_Events/"
-
-##datadir <- file.path(projdir, "biomass_smoke_events_db")
-
-##setwd(projdir)
 
 outdir <- "static/data_extracts"
 dir(outdir)
