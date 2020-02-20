@@ -1,5 +1,6 @@
 ## a script to extract events from the bushfire smoke event database
 ## ivanhanigan
+library(reshape2)
 library(RSQLite)
 drv <- dbDriver("SQLite")
 ch <- dbConnect(drv, dbname = "databases/storage.sqlite")
@@ -8,72 +9,177 @@ str(qc)
 qc2  <- dbGetQuery(ch , "select * from biomass_smoke_event")
 
 
-outdir <- "static/data_extracts"
-dir(outdir)
+outdir <- "data_extracts"
 if(!file.exists(outdir)) dir.create(outdir)
+dir(outdir)
 
-towns <- c("Sydney","Illawarra","Lower Hunter","Hobart","Launceston")
-## "PERTH", cannot do West Australian towns currently because of
-## licence restrictions
-town <- towns[2]
+
+dbGetQuery(ch , "select region from pollution_stations_combined_final group by region")
+"
+         region
+1        Albany
+2        Albury
+3      Armidale
+4      Bathurst
+5       Bunbury
+6     Busselton
+7     Geraldton
+8        Hobart
+9     Illawarra
+10   Launceston
+11 Lower Hunter
+12        Perth
+13       Sydney
+14     Tamworth
+15  Wagga Wagga
+"
+table(qc2$place)
+
+towns <- c("Sydney","Illawarra","Lower Hunter","Hobart","Launceston", "Perth", "Bunbury", "Busselton", "Geraldton")
+## NB non-CAR affiliated researchers cannot use West Australian air
+## pollution currently because of licence restrictions
+
+
+for(town in towns[7:9]){
+##town <- towns[1]
 town
-outfile <- sprintf("biomass_smoke_events_db_%s_extracted_%s.csv", tolower(town), Sys.Date())
+outfile <- sprintf("biomass_smoke_events_db_%s_extracted_%s.csv", gsub(" ", "_", tolower(town)), Sys.Date())
 file.path(outdir, outfile)
 
 
 
 #### now extract the LFS data
+    ## relabel town names if needed
+    town_in <- ifelse(town == "Lower Hunter", "Newcastle", town)
+
 events <- dbGetQuery(ch,
-paste0("select t2.biomass_smoke_reference_id, '",town,"' as place, 'lfs' as event_type, min_date, max_date
+paste0("select t2.biomass_smoke_reference_id, '",town,"' as place, 'lfs' as event_type, min_date, max_date, protocol_used
 from biomass_smoke_event t2
 join biomass_smoke_reference t3
 on t2.biomass_smoke_reference_id = t3.id
-where place like '",town,"%' and (event_type = 'bushfire' or event_type = 'prescribed burn' or event_type = 'possible biomass')
+where place like '",town_in,"%' and (event_type = 'bushfire' or event_type = 'prescribed burn' or event_type = 'possible biomass')
 order by min_date
 "))
-str(events)
-events$min_date <- as.Date(events$min_date)
-events$max_date <- as.Date(events$max_date)
-head(events)
-#disentangle::data_dict(events, "event_type")
 
+    str(events)
+
+    events$min_date <- as.Date(events$min_date)
+    events$max_date
+
+    events$max_date <- as.Date(events$max_date)
+head(events)
+
+
+    ## sanity check: maxdate should be greater than mindate, if not just
+    ## remove it
+    events$max_date2 <- ifelse(events$max_date < events$min_date, NA, as.character(events$max_date))
+
+    events$max_date <- as.Date(events$max_date2)
+    events$max_date2 <- NULL
+    str(events)
 dateranges  <- events[!is.na(events$max_date),]
-dateranges[1,]
+dateranges[1:4,]
 head(dateranges[,4])
 
-events_out <- data.frame(matrix(NA, ncol = 3, nrow = 0))
-names(events_out) <- c("place", "date", "lfs_event")
+## loop over event range and create intervening events days
+events_out <- data.frame(matrix(NA, ncol = 4, nrow = 0))
+names(events_out) <- c("place", "date", "protocol_used", "lfs_event")
 for(i in 1:nrow(dateranges))
   {
-  #  i =1
+  ##  i =1
   dates <- data.frame(seq(dateranges[i,"min_date"], dateranges[i,"max_date"], 1))
   names(dates) <- "date"
   events_out  <- rbind(events_out,
                       data.frame(place = town,
                                  date = dates,
+                                 protocol_used = dateranges[i,"protocol_used"],
                                  lfs_event = 1)
                       )
   }
 head(events_out, 25)
 
-single_dates  <- events[is.na(events$max_date), c("place", "min_date")]
+single_dates  <- events[is.na(events$max_date), c("place", "min_date", "protocol_used")]
 head(single_dates)
 single_dates$lfs_event  <- 1
-names(single_dates)  <- c("place", "date", "lfs_event")
+names(single_dates)  <- c("place", "date", "protocol_used", "lfs_event")
 events_out <- rbind(single_dates, events_out)
-events_out <- sqldf::sqldf("select *
+
+## order by date, and assess how many refs support each date
+events_out <- sqldf::sqldf("select place, date, lfs_event, protocol_used, count(*) as refs_used
 from events_out
-group by place, date, lfs_event
+group by place, date, lfs_event, protocol_used
 order by date", drv = "SQLite")
 head(events_out, 25)
 
+##args(dcast)
+qc <- dcast(events_out, place + date + lfs_event ~ protocol_used, value.var = "refs_used")
+head(qc)
 
-## GET THE POLLUTION DATA
-dbGetQuery(ch, "select site, region from pollution_stations_combined_final")
+## are any dates covered by more than one protocol?
+qc2 <- sqldf::sqldf("select place, date, count(*) as n_protocols_used
+from events_out
+group by place, date, lfs_event
+order by date", drv = "SQLite")
+head(qc2[rev(order(qc2$n_protocols_used)),])
+"
+     place       date n_protocols_used
+522 Sydney 2009-02-07                2
+521 Sydney 2009-02-06                2
+515 Sydney 2009-01-15                2
+512 Sydney 2009-01-06                2
+"
+    str(qc)
+names(events)
+events[events$min_date > as.Date("2009-01-01") & events$protocol_used == "Johnston2011",]
+    qc[qc$date >= as.Date("2009-01-03") & qc$date <= as.Date("2009-01-21"),]
+    events[events$min_date > as.Date("2008-11-01") & events$protocol_used == "Johnston2011",]
+    ## OK this looks correct, Tahlia must have inserted these 2009 events
+## prior to focussing on events before 2007-06-30
+
+pused <- names(qc)[4:length(names(qc))]
+    tail(qc, 32)
+qc$protocols_used <- ''
+    for(p in 1:length(pused)){
+        ##        p = 1
+        for(nr in 1:nrow(qc)){
+        qc$protocols_used[nr] <-
+            ifelse(!is.na(qc[nr,3+p]), paste(qc$protocols_used[nr], pused[p], collapse = "", sep = ", "), qc$protocols_used[nr])
+        }
+    }
+    str(qc)
+    qc[612,]
+    qc[qc$date == "2009-01-06",]
+    qc$protocols_used <- gsub("^, ", "", qc$protocols_used)
+        head(qc,25)
+    tail(qc, 32)
+    qcout <- data.frame(table(qc$date))
+    head(qcout[rev(order(qcout$Freq)),])
+## good
+events_out <- qc[,c("place", "date", "lfs_event", "protocols_used")]
+    str(events_out)
+    ##events_out
+
+#### GET THE POLLUTION DATA ####
+dbGetQuery(ch, "select * from pollution_stations_combined_final")
 dbGetQuery(ch, paste0("select site, region from pollution_stations_combined_final
 where lower(region) like '",tolower(town),"%'")
 )
 
+## example of Black Christmas in Sydney 2001
+town_toget <- 'Sydney'
+extract_eg <-  dbGetQuery(ch,
+paste0("select t1.site, region, lat, lon, date, pm25_av, pm10_av
+from
+(select * from pollution_stations_combined_final where
+        lower(region) like '",tolower(town_toget),"%' or
+lower(region) = '",tolower(town_toget),"') t1
+left join combined_pollutants t2
+on t1.site = t2.site
+where date == '2001-12-25'")
+)
+extract_eg
+
+## here use city-wide averages, not imputing or weighting
 extract  <- dbGetQuery(ch,
 paste0("select t1.region as studysite, date, avg(pm25_av) as pm2p5, avg(pm10_av) as pm10
 from
@@ -84,18 +190,19 @@ left join combined_pollutants t2
 on t1.site = t2.site
 group by region, date")
 )
-
+tail(extract)
 extract$date <- as.Date(extract$date)
 str(extract)
 extract$studysite <- NULL
 names(extract) <- c("date", "pm25_lag0", "pm10_lag0")
 extract$pm25_lag0 <- as.numeric(extract$pm25_lag0)
+extract$pm10_lag0 <- as.numeric(extract$pm10_lag0)
 
 extracted <- merge(extract, events_out, all.x = T)
 str(extracted)
 head(extracted, 25)
 extracted$place <- town
-
+summary(extracted$pm10_lag0)
 extracted$lfs_pm10_lag0 <- ifelse(extracted$pm10_lag0 >= quantile(extracted$pm10_lag0, .95, na.rm = T),
                                   ifelse(is.na(extracted$lfs_event), 0, extracted$lfs_event),
                                   0
@@ -139,8 +246,12 @@ extracted$pm25pct_lag0[!is.na(extracted$pm25_lag0)] <- (rank(extracted$pm25_lag0
 tail(extracted, 25)
 str(extracted)
 
-
+str(extracted)
+tail(extracted, 25)
 ## visualise this
+dir()
+#dir.create("figures_and_tables")
+png(sprintf("figures_and_tables/%s_bushfires.png", town), width = 1000, height = 700, res = 80)
 par(mfrow = c(2,1))
 with(extracted, plot(date, pm10_lag0, type = "l", ylim = c(0, 250)))
 points(
@@ -149,7 +260,7 @@ points(
   extract[extracted$lfs_pm10_lag0 == 1, "pm10_lag0"]
                    , col = 'red', pch = 16, cex = .7
 )
-
+title(paste(town, "validated bushfire smoke events (red)"))
 
 with(extracted, plot(date, pm25_lag0, type = "l", ylim = c(0, 250)))
 points(
@@ -159,7 +270,7 @@ points(
                    , col = 'red', pch = 16, cex = .7
 )
 dev.off()
-
+#}
 
 ## compare to Sydney plots in williamson (2016) and horsley (2018)
 town
@@ -176,7 +287,7 @@ points(
   )
 with(extract[extracted$lfs_pm25_lag0 == 1,], plot(date, pm25_lag0, type = "h", xlim = c(xmin, xmax), ylim = c(0,110)))
 abline(25, 0)
-dev.off()
+##dev.off()
 }
 
 ## final write to CSV
@@ -185,10 +296,9 @@ final_out <- extracted
 #final_out$protocol_used <- ifelse(final_out$date >= as.Date("2007-07-01"), "Satellite Only", "Johnston2011")
 
 str(final_out)
-tail(final_out)
 
 ## TODO if the extraction is acceptable then write the result out to CSV
-##write.csv(final_out, file.path(outdir, outfile), row.names = F)
-
+write.csv(final_out, file.path(outdir, outfile), row.names = F, na = '')
+}
 ## end
 ##dbDisconnect(ch)
