@@ -54,3 +54,5 @@ This database comes originally from the work written up at:
 
 - Ivan C. Hanigan 1,2,3,* , Geoffrey G. Morgan 1,2, Grant J. Williamson 4 , Farhad Salimi 1,2, Sarah B. Henderson 5 , Murray R. Turner 6 , David M. J. S. Bowman 4 and Fay H. Johnston 2,7 (2018). Extensible Database of Validated Biomass Smoke Events for Health Research. Fire, 1, 50; http://doi.org/10.3390/fire1030050
 
+## Recommended Citation:
+- Hanigan, I. (Creator), Morgan, G. (Creator), Williamson, G. (Creator), Salimi, F. (Creator), Henderson, S. (Creator), Turner, M. (Creator), Bowman, D. M. J. S. (Creator), Johnston, F. H. (Creator) (5 Aug 2015). The Biomass Smoke Validated Events Database. ANU. 10.4225/64/59276c30b3a01 Data retrieved from Centre for Air pollution, energy and health Research. https://github.com/swish-climate-impact-assessment/biomass_smoke_events_db
