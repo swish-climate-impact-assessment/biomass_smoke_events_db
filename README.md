@@ -11,12 +11,12 @@ https://github.com/swish-climate-impact-assessment/biomass_smoke_events_db
 
 # Installation instructions
 
-- Download web2py.  This runs on windows, linux and mac.  It requires no installation, just unzip the files to the location you want to work on the biomass smoke databse (e.g. `MyDocuments/projects/bushfires` or something)
+- Download [http://www.web2py.com/init/default/download](web2py). Get the binaries for the `Python 2.7` version not the source code. This runs on windows, linux and mac.  It requires no installation, just unzip the files to the location you want to work on the biomass smoke databse (e.g. `MyDocuments/projects/bushfires` or something)
 - Clone or Download this github repo as a zip
-- put the files within this repo into the `applications/biomass_smoke_events_db` folder of your web2py downloaded folder
+- Unzip and put the files within this repo into a new folder: `applications/biomass_smoke_events_db` of your web2py downloaded folder (note that the github zip may be called `biomass_smoke_events_db-master.zip` so you will need to edit the name and remove `-master`)
 - run the `web2py` program as per the instructions for your OS
 - use a web browser to visit the local website `http://127.0.0.1:8000/biomass_smoke_events_db` (note that the port:8000 used in the example here can change depending on how you start web2py)
-- you have to register so that you can enter data (this is a default setting of web2py apps)
+- in the top right, you have to register by clicking `sign up` so that you can enter data (this is a default setting of web2py apps, and is only used on your local computer so you can use any name and passcode)
 - the references are added first, and then the events that reference validates are added
 - Alternatively there are instructions on how to use R to do the download and install the Web2py database software and this app here: [https://github.com/swish-climate-impact-assessment/biomass_smoke_events_db/blob/master/static/install.R](https://github.com/swish-climate-impact-assessment/biomass_smoke_events_db/blob/master/static/install.R)
 
