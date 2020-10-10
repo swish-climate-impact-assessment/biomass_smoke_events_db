@@ -7,31 +7,34 @@ ch <- dbConnect(drv, dbname = "databases/storage.sqlite")
 qc  <- dbGetQuery(ch , "select * from biomass_smoke_reference")
 str(qc)
 qc2  <- dbGetQuery(ch , "select * from biomass_smoke_event")
-
+str(qc2)
+qc3 <- dbGetQuery(ch, "select * from pollution_stations_combined_final")
+str(qc3)
 
 outdir <- "data_extracts"
 if(!file.exists(outdir)) dir.create(outdir)
 dir(outdir)
 
+dbGetQuery(ch , "select place, place_other, count(*) as N from biomass_smoke_event group by place, place_other")
 
-dbGetQuery(ch , "select region from pollution_stations_combined_final group by region")
+dbGetQuery(ch , "select region, nam from pollution_stations_combined_final group by region, nam order by nam, region")
 "
-         region
-1        Albany
-2        Albury
-3      Armidale
-4      Bathurst
-5       Bunbury
-6     Busselton
-7     Geraldton
-8        Hobart
-9     Illawarra
-10   Launceston
-11 Lower Hunter
-12        Perth
-13       Sydney
-14     Tamworth
-15  Wagga Wagga
+         region               nam
+1        Albury   NEW SOUTH WALES
+2      Armidale   NEW SOUTH WALES
+3      Bathurst   NEW SOUTH WALES
+4     Illawarra   NEW SOUTH WALES
+5  Lower Hunter   NEW SOUTH WALES
+6        Sydney   NEW SOUTH WALES
+7      Tamworth   NEW SOUTH WALES
+8   Wagga Wagga   NEW SOUTH WALES
+9        Hobart          TASMANIA
+10   Launceston          TASMANIA
+11       Albany WESTERN AUSTRALIA
+12      Bunbury WESTERN AUSTRALIA
+13    Busselton WESTERN AUSTRALIA
+14    Geraldton WESTERN AUSTRALIA
+15        Perth WESTERN AUSTRALIA
 "
 table(qc2$place)
 
@@ -41,7 +44,7 @@ towns <- c("Sydney","Illawarra","Lower Hunter","Hobart","Launceston", "Perth", "
 
 
 for(town in towns[7:9]){
-##town <- towns[1]
+##town <- towns[4]
 town
 outfile <- sprintf("biomass_smoke_events_db_%s_extracted_%s.csv", gsub(" ", "_", tolower(town)), Sys.Date())
 file.path(outdir, outfile)
