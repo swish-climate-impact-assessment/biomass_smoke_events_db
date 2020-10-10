@@ -10,6 +10,8 @@ qc2  <- dbGetQuery(ch , "select * from biomass_smoke_event")
 str(qc2)
 qc3 <- dbGetQuery(ch, "select * from pollution_stations_combined_final")
 str(qc3)
+qc4 <- dbGetQuery(ch, "select * from combined_pollutants")
+str(qc4)
 
 outdir <- "data_extracts"
 if(!file.exists(outdir)) dir.create(outdir)
