@@ -345,18 +345,172 @@ English Editing from Nature Research ✯ Corrects your language errors ✯ Exper
 ** DONE note that when merging develop with master need to ensure that downloaders use sqlite
 ** WONTDO make downloaded version not require log in
 ** DONE remove the develop branch
+** DONE UPLOADS import wa pollution to staging db
+- copy current db to alternate folder
+- import perth into current database WITHOUT SYNCING TO GITHUB
+- rename folders and DO NOT GIT ADD DATABASE_WITH_WA FOLDER
+*** upload
+#+begin_src R :session *R* :tangle no :exports none :eval no
+  'name:upload'
+  library(RSQLite)
+  drv <- dbDriver("SQLite")
+  ch <- dbConnect(drv, dbname = "databases/storage.sqlite")
+  dbListTables(ch)
+
+  input_orig_data <- F
+  if(input_orig_data){
+  indat <- read.csv("/home/Environment_General/Biomass_Smoke_Validated_Events/biosmoke_pollution/data_provided/combined_pollutants.csv", as.is = T)
+  str(indat)
+  tail(indat)
+  ## whoops the dates are munted
+  dbGetQuery(ch, "select * from combined_pollutants where site = 'Wollongong' and date ='2009-02-04'")
+
+  indat[1,"date"]
+  indat$date2 <- as.Date(
+      paste0(substr(indat[,"date"],1,4), "-", substr(indat[,"date"],9,10), "-", substr(indat[,"date"],12,13), sep = "")
+          )
+  head(indat)
+  indat$date2 <- as.Date(indat$date2)
+  indat$date <- as.character(indat$date2)
+  indat$date2 <- NULL
+  str(indat)
+  dbWriteTable(ch, "temp", indat, row.names = F)
+  paste(names(dbGetQuery(ch, "select * from temp limit 10")), sep = "", collapse = "', '")
+  names(dbGetQuery(ch, "select * from combined_pollutants limit 10"))
+
+  ## dbSendQuery(ch,
+  ## "delete from combined_pollutants
+  ## where site in ('Albany','Bunbury','Busselton','Geraldton','CavershamA',
+  ## 'CavershamB','Duncraig','QueensBuilding','QuinnsRocks','SouthLake')
+  ## ")
+
+
+  dbGetQuery(ch, "insert into combined_pollutants (
+  'site', 'date', 'bsp_av', 'bsp_max', 'co_av', 'co_max', 'no_av', 'no_max', 'no2_av', 'no2_max', 'nox_av', 'nox_max', 'o3_av', 'o3_max', 'pm10_av', 'pm10_max', 'pm10_ds', 'pm25_av', 'pm25_max', 'pm25_ds', 'so2_av', 'so2_max'
+  )
+  select * from temp
+  where site in ('Albany','Bunbury','Busselton','Geraldton','CavershamA','CavershamB','Duncraig','QueensBuilding','QuinnsRocks','SouthLake')
+  ")
+
+  dbGetQuery(ch, "select site, count(*) from combined_pollutants group by site")
+
+  dbSendQuery(ch, "drop table temp")
+  }
+
+  ## QC
+
+  qc <- dbGetQuery(ch, "select region, t1.site, date, pm25_av
+  from
+  (select * from pollution_stations_combined_final where region like 'Perth%') t1
+  left join combined_pollutants t2
+  on t1.site = t2.site
+  ")
+  tail(qc, 25)
+
+  qc <- dbGetQuery(ch, "select region, date, avg(pm25_av) as pm25_lag0
+  from
+  (select * from pollution_stations_combined_final where region like 'Perth%') t1
+  left join combined_pollutants t2
+  on t1.site = t2.site
+  group by region, date
+  ")
+  tail(qc)
+  summary(qc)
+  qc$date <- as.Date(qc$date)
+  qc$pm25_lag0 <- as.numeric(qc$pm25_lag0)
+  with(qc, plot(date, pm25_lag0, type = "l"))
+#+end_src
+** DONE add protocol used field (multiple per date?), 
+- rewrite script get_events_and_timeseries.R (direct to R, not in orgmode)
+- mention sampling effort bias, in metadata
+- into data_extracts folder, move old data to versions/. keep metadata and temp
+- send to ric up to github without wa
+** TODO make periodic extract files and plot for all including WA towns
+- 13       Sydney
+- 9     Illawarra
+- 11 Lower Hunter
+- 8        Hobart
+- 10   Launceston
+- 12        Perth
+- 1        Albany
+- 5       Bunbury
+- 6     Busselton
+- 7     Geraldton
+- 2        Albury
+- 3      Armidale
+- 4      Bathurst
+- 14     Tamworth
+- 15  Wagga Wagga
+** TODO what about Q drive?
+- up to cardat with wa
+- up to github without wa
+** TODO WHAT ABOUT MELBOURNE???
+** TODO "Albany", maxdate = 2007? needs to be ISO 8601
+** TODO RCODE additional plots for sydney
+## additional plots for sydney
+
+png(sprintf("figures_and_tables/%s_bushfires_2002_03.png", town), width = 1000, height = 700, res = 80)
+with(extracted, plot(date, pm10_lag0, type = "l", ylim = c(-10, 150), xlim = c(as.Date("2002-12-01"), as.Date("2003-02-28"))))
+points(
+  extract[extracted$lfs_pm10_lag0 == 1, "date"]
+                   ,
+  extract[extracted$lfs_pm10_lag0 == 1, "pm10_lag0"]
+                   , col = 'red', pch = 16, cex = .7
+)
+segments(
+  extract[extracted$lfs_pm10_lag0 == 1, "date"]
+                   ,
+  10,
+  extract[extracted$lfs_pm10_lag0 == 1, "date"]
+                   ,
+  extract[extracted$lfs_pm10_lag0 == 1, "pm10_lag0"], lty = 2
+)
+
+axis(1, labels = NA)
+x <- seq(as.Date("2002-12-01"), as.Date("2003-02-28"), by = 1)
+text(x, -10, x, adj = 0, cex = 0.8, srt = 90)
+title(paste(town, "validated bushfire smoke events (red) in Summer 2002/03"))
+dev.off()
+
+png(sprintf("figures_and_tables/%s_bushfires_2001_02.png", town), width = 1000, height = 700, res = 80)
+with(extracted, plot(date, pm10_lag0, type = "l", ylim = c(-10, 150), xlim = c(as.Date("2001-12-01"), as.Date("2002-02-28"))))
+points(
+  extract[extracted$lfs_pm10_lag0 == 1, "date"]
+                   ,
+  extract[extracted$lfs_pm10_lag0 == 1, "pm10_lag0"]
+                   , col = 'red', pch = 16, cex = .7
+)
+segments(
+  extract[extracted$lfs_pm10_lag0 == 1, "date"]
+                   ,
+  10,
+  extract[extracted$lfs_pm10_lag0 == 1, "date"]
+                   ,
+  extract[extracted$lfs_pm10_lag0 == 1, "pm10_lag0"], lty = 2
+)
+
+axis(1, labels = NA)
+x <- seq(as.Date("2001-12-01"), as.Date("2002-02-28"), by = 1)
+text(x, -10, x, adj = 0, cex = 0.8, srt = 90)
+title(paste(town, "validated bushfire smoke events (red) in Summer 2001/02"))
+dev.off()
+
 ** TODO the github landing page is source code, gh-pages needs edit or removal
 ** TODO decommission ANU site, make all references to the github, make landing page that says go to github
 ** TODO what is procedure for deploy postgres master to sqlite develop and then origi master db?
 ** TODO procedure to upload locations and to update locations with new ones
-** TODO rewrite script get_events_and_timeseries.R (direct to R, not in orgmode)
-** TODO snip qc from get events
+** TODO issue when selecting days above 95% but with NA LFS: snip qc from get events
 # NB there is an issue when selecting days above 95% but with NA LFS
 #            date pm10pct_lag0 lfs_pm10_lag0
 # 7282 2013-12-08   0.76670318             0
 # 7283 2013-12-09   0.95228642            NA
 # 7284 2013-12-10   0.60460022             0
+** TODO spelling update the spatial data name for Illawara to Illawarra
+dbSendQuery(ch, "UPDATE pollution_stations_combined_final
+   SET region = 'Illawarra'
+ WHERE region = 'Illawara'")
 ** TODO sqlite doesn't increment the ref id
+*** show the problem
 ## 2020-02-18 there was a difference with Williamson at end of 2013, and this is
 ## in Horsley too
 qc <- extracted[extracted$date >= as.Date("2013-01-01") &
@@ -422,11 +576,14 @@ values (1468, 800, 'Sydney East', 'bushfire', '2013-10-21')
 ")
 # woops string to float??
 # dbSendQuery(ch, "delete from biomass_smoke_event where id = 1468")
-** TODO update the spatial data name for Illawara to Illawarra
-dbSendQuery(ch, "UPDATE pollution_stations_combined_final
-   SET region = 'Illawarra'
- WHERE region = 'Illawara'")
 
+*** TODO thoughts to test incrementing
+   + make empty database folder
+   + start web2py
+** TODO what is temp in db and in temp.csv? backup?
+it is removed from the with_wa database, but still in the without_wa.  check before finalising
+** TODO this in the lower hunter had an error
+  events[events$biomass_smoke_reference_id == 656,]
 * sqlite works
 ** TODO sqlite-code for update to ref table CAREFUL THIS MADE ERROR IN THE 1ST RECORD
 #+name:sqlite
@@ -709,6 +866,81 @@ GRANT ALL ON TABLE public.biomass_smoke_event TO ivan_hanigan;
   segments(as.Date('2009-01-01'), 0, as.Date('2009-01-01'), 200, col = 'red')
 
 #+end_src
+
+** TODO emailed to richard
+Please note that in the database I published to github at 'databases/storage.sqlite' there is also a table of each site, lat/lons and pollution concentrations that you could use to do a IDW or kriging surface for each smoke day. That would be really cool.  
+An example query in R is:
+*** extract eg
+#+begin_src R :session *R* :tangle no :exports none :eval no
+  #### GET THE POLLUTION DATA ####
+  library(RSQLite)
+  drv <- dbDriver("SQLite")
+  ch <- dbConnect(drv, dbname = "databases/storage.sqlite")
+
+  dbGetQuery(ch, "select * from pollution_stations_combined_final") 
+  # shows the site locations for all places in the database (NSW, TAS and WA only currently)
+
+  ## example of Black Christmas in Sydney 2001
+  town_toget <- 'Sydney'
+  extract_eg <-  dbGetQuery(ch,
+  paste0("select t1.region as studysite, date, pm25_av, pm10_av
+  from
+  (select * from pollution_stations_combined_final where
+          lower(region) like '",tolower(town_toget),"%' or
+  lower(region) = '",tolower(town_toget),"') t1
+  left join combined_pollutants t2
+  on t1.site = t2.site
+  where date == '2001-12-25'")
+  )
+  extract_eg
+       t1.site region       lat      lon       date pm25_av pm10_av
+  1      Bargo Sydney -34.30750 150.5800 2001-12-25      NA      NA
+  2  Bringelly Sydney -33.91944 150.7611 2001-12-25      NA    53.6
+  3   Earlwood Sydney -33.91778 151.1347 2001-12-25    21.7    46.4
+  4  Lindfield Sydney -33.78278 151.1500 2001-12-25      NA    32.8
+  5  Liverpool Sydney -33.93278 150.9058 2001-12-25    19.7    38.4
+  6   Randwick Sydney -33.93333 151.2419 2001-12-25      NA      NA
+  7   Richmond Sydney -33.61833 150.7458 2001-12-25      NA    71.6
+  8    Rozelle Sydney -33.86583 151.1625 2001-12-25      NA      NA
+  9   St Marys Sydney -33.79722 150.7658 2001-12-25      NA    84.3
+  10  Vineyard Sydney -33.65778 150.8467 2001-12-25      NA    33.9
+#+end_src   
+*** names
+#+begin_src R :session *R* :tangle no :exports none :eval no
+  #### GET THE POLLUTION DATA ####
+  library(RSQLite)
+  drv <- dbDriver("SQLite")
+  ch <- dbConnect(drv, dbname = "databases/storage.sqlite")
+
+  qc <- dbGetQuery(ch, "select * from combined_pollutants limit 1")
+  t(qc)
+  ## # shows the site locations for all places in the database (NSW, TAS and WA only currently)
+
+  ## ## example of Black Christmas in Sydney 2001
+  ## town_toget <- 'Sydney'
+  ## extract_eg <-  dbGetQuery(ch,
+  ## paste0("select t1.region as studysite, date, pm25_av, pm10_av
+  ## from
+  ## (select * from pollution_stations_combined_final where
+  ##         lower(region) like '",tolower(town_toget),"%' or
+  ## lower(region) = '",tolower(town_toget),"') t1
+  ## left join combined_pollutants t2
+  ## on t1.site = t2.site
+  ## where date == '2001-12-25'")
+  ## )
+  ## extract_eg
+  ##      t1.site region       lat      lon       date pm25_av pm10_av
+  ## 1      Bargo Sydney -34.30750 150.5800 2001-12-25      NA      NA
+  ## 2  Bringelly Sydney -33.91944 150.7611 2001-12-25      NA    53.6
+  ## 3   Earlwood Sydney -33.91778 151.1347 2001-12-25    21.7    46.4
+  ## 4  Lindfield Sydney -33.78278 151.1500 2001-12-25      NA    32.8
+  ## 5  Liverpool Sydney -33.93278 150.9058 2001-12-25    19.7    38.4
+  ## 6   Randwick Sydney -33.93333 151.2419 2001-12-25      NA      NA
+  ## 7   Richmond Sydney -33.61833 150.7458 2001-12-25      NA    71.6
+  ## 8    Rozelle Sydney -33.86583 151.1625 2001-12-25      NA      NA
+  ## 9   St Marys Sydney -33.79722 150.7658 2001-12-25      NA    84.3
+  ## 10  Vineyard Sydney -33.65778 150.8467 2001-12-25      NA    33.9
+#+end_src   
 
 * upgrade devel sqlite based on pgis
 
