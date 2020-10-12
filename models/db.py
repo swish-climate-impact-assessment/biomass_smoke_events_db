@@ -108,7 +108,7 @@ db.biomass_smoke_reference.year.requires = IS_NOT_EMPTY()
 db.define_table(
     'biomass_smoke_event',
     Field('biomass_smoke_reference_id', db.biomass_smoke_reference),
-    Field('place', requires = IS_IN_SET(['Other','ALBANY','Albury','Bathurst','BUNBURY','BUSSELTON','GERALDTON','hobart','Illawarra','launceston','Newcastle','PERTH','Sydney East','Sydney West','Tamworth','Wagga Wagga']), comment='The pre-determined study locations of the biomass smoke project.'),
+    Field('place', requires = IS_IN_SET(['Other','ALBANY','Albury','Bathurst','BUNBURY','BUSSELTON','Canberra','GERALDTON','hobart','Illawarra','launceston','Newcastle','PERTH','Sydney East','Sydney West','Tamworth','Wagga Wagga']), comment='The pre-determined study locations of the biomass smoke project.'),
     Field('place_other', 'string', comment='If you chose "other place" what is the name of this?'),        
     Field('event_type', requires = IS_IN_SET(['bushfire','dust','non-biomass, fire','non-biomass, non-fire','possible biomass','prescribed burn','woodsmoke']), comment = 'Compulsory. Select from list'),
     Field('min_date', 'date', comment='The first date of known event. Compulsory.'),
