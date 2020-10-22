@@ -277,7 +277,7 @@ events_out <- qc[,c("place", "date", "lfs_event", "protocols_used")]
 # #par(mfrow = c(2,1))
 # with(extracted, plot(date, pm10_lag0, type = "l", ylim = c(0, 250), xlim = c(min(extracted$date),as.Date("2019-12-31"))))
 # qc JOe's work
-    with(events_out, plot(date, rep(0, nrow(events_out)), type = "l", ylim = c(0, 150), xlim = c(min(extracted$date),as.Date("2019-12-31"))))
+    with(events_out, plot(date, rep(0, nrow(events_out)), type = "l", ylim = c(0, 150), xlim = c(min(events_out$date),as.Date("2019-12-31"))))
 tail(events_out)
 with(events_out, segments(date, lfs_event, date, lfs_event*100, col = 'grey', lty = 2))
 outfile
