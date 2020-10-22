@@ -1,0 +1,5 @@
+variable,description
+place,Town/city name as used in the biomass smoke database
+date,
+lfs_event,"Yes = 1, No = 0.  Any valid reference to bushfire, prescribed burn or 'possible biomass' (i.e. a landscape fire smoke; LFS) event on this day"
+protocols_used,"The protocol used for validation. See the descriptions in published paper Hanigan et al 2018 (http://doi.org/10.3390/fire1030050). This database is a a collection of events from times and places that have had unequal amounts of research effort expended on finding evidence (e.g., differential sampling intensity), and may not be ‘missing at random’ and therefore contain systematic biases. This field can be used to assess the potential influence of this on analyses. There can be multiple protocols used to validate any specific date, so the names of each protocol are included as comma separated values in the same column."
