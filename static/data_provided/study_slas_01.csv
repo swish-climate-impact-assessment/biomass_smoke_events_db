@@ -1,0 +1,127 @@
+﻿gid,studysite,year,name_conco,sla_concor
+1,ALBANY,2001,Albany (C) Bal,50084
+2,ALBANY,2001,Albany (C) - Central,50081
+3,Albury,2001,Albury (C),10050
+4,Armidale,2001,Armidale Dumaresq (A) Bal,10112
+5,Armidale,2001,Armidale Dumaresq (A) - City,10111
+6,Bathurst,2001,Bathurst (C),10450
+7,BUNBURY,2001,Harvey (S) - Pt A,53991
+8,BUNBURY,2001,Dardanup (S) - Pt A,52661
+9,BUNBURY,2001,Bunbury (C),51190
+10,BUNBURY,2001,Capel (S) - Pt A,51401
+11,BUSSELTON,2001,Busselton (S),51260
+12,GERALDTON,2001,Geraldton (C),53500
+13,GERALDTON,2001,Greenough (S) - Pt A,53851
+14,Gosford-Wyong,2001,Wyong (A),18550
+15,Gosford-Wyong,2001,Gosford (C),13100
+16,hobart,2001,Clarence (C),61410
+17,hobart,2001,Kingborough (M) - Pt A,63611
+18,hobart,2001,Sorell (M) - Pt A,64811
+19,hobart,2001,Kingborough (M) - Pt B,63612
+20,hobart,2001,Brighton (M),60410
+21,hobart,2001,Derwent Valley (M) - Pt A,61511
+22,hobart,2001,Glenorchy (C),62610
+23,hobart,2001,Hobart (C) - Inner,62811
+24,hobart,2001,Hobart (C) - Remainder,62812
+25,Illawarra,2001,Wollongong (C),18450
+26,Illawarra,2001,Kiama (A),14400
+27,Illawarra,2001,Shellharbour (C),16900
+28,launceston,2001,Meander Valley (M) - Pt A,64211
+29,launceston,2001,Launceston (C) - Pt B,64012
+30,launceston,2001,Launceston (C) - Inner,64011
+31,launceston,2001,George Town (M) - Pt A,62211
+32,launceston,2001,Northern Midlands (M) - Pt A,64611
+33,launceston,2001,West Tamar (M) - Pt A,65811
+34,Newcastle,2001,Lake Macquarie (C),14650
+35,Newcastle,2001,Newcastle (C) - Remainder,15902
+36,Newcastle,2001,Maitland (C),15050
+37,Newcastle,2001,Newcastle (C) - Inner,15901
+38,PERTH,2001,Vincent (T),58570
+39,PERTH,2001,Peppermint Grove (S),56930
+40,PERTH,2001,Swan (C),58050
+41,PERTH,2001,Cockburn (C),51820
+42,PERTH,2001,Serpentine-Jarrahdale (S),57700
+43,PERTH,2001,Cambridge (T),51310
+47,PERTH,2001,East Fremantle (T),53150
+44,PERTH,2001,Mosman Park (T),55740
+45,PERTH,2001,Armadale (C),50210
+46,PERTH,2001,Mundaring (S),56090
+61,PERTH,2001,Canning (C),51330
+62,PERTH,2001,Fremantle (C) - Inner,53431
+63,PERTH,2001,Nedlands (C),56580
+48,PERTH,2001,Claremont (T),51750
+49,PERTH,2001,Perth (C) - Remainder,57082
+50,PERTH,2001,Joondalup (C) - South,54174
+51,PERTH,2001,Kwinana (T),54830
+52,PERTH,2001,Bayswater (C),50420
+53,PERTH,2001,Stirling (C) - Central,57914
+54,PERTH,2001,Stirling (C) - South-Eastern,57916
+55,PERTH,2001,Stirling (C) - Coastal,57915
+56,PERTH,2001,Belmont (C),50490
+57,PERTH,2001,Cottesloe (T),52170
+58,PERTH,2001,Melville (C),55320
+59,PERTH,2001,Gosnells (C),53780
+60,PERTH,2001,Murray (S),56230
+64,PERTH,2001,Wanneroo (C) - South,58767
+65,PERTH,2001,South Perth (C),57840
+66,PERTH,2001,Mandurah (C),55110
+67,PERTH,2001,Subiaco (C),57980
+68,PERTH,2001,Wanneroo (C) - North-West,58764
+69,PERTH,2001,Kalamunda (S),54200
+70,PERTH,2001,Wanneroo (C) - North-East,58761
+71,PERTH,2001,Victoria Park (T),58510
+72,PERTH,2001,Perth (C) - Inner,57081
+73,PERTH,2001,Joondalup (C) - North,54171
+74,PERTH,2001,Bassendean (T),50350
+75,PERTH,2001,Rockingham (C),57490
+76,PERTH,2001,Fremantle (C) - Remainder,53432
+77,Sydney East,2001,Botany Bay (C),11100
+78,Sydney East,2001,Hornsby (A),14000
+79,Sydney East,2001,Sutherland Shire (A) - West,17152
+80,Sydney East,2001,Pittwater (A),16370
+81,Sydney East,2001,Ryde (C),16700
+82,Sydney East,2001,Kogarah (A),14450
+83,Sydney East,2001,Warringah (A),18000
+84,Sydney East,2001,Sydney (C) - Remainder,17202
+85,Sydney East,2001,South Sydney (C),17070
+86,Sydney East,2001,Randwick (C),16550
+87,Sydney East,2001,Leichhardt (A),14800
+88,Sydney East,2001,Drummoyne (A),12550
+89,Sydney East,2001,North Sydney (A),15950
+90,Sydney East,2001,Sutherland Shire (A) - East,17151
+91,Sydney East,2001,Ku-ring-gai (A),14500
+92,Sydney East,2001,Mosman (A),15350
+93,Sydney East,2001,Concord (A),11900
+94,Sydney East,2001,Marrickville (A),15200
+95,Sydney East,2001,Woollahra (A),18500
+96,Sydney East,2001,Sydney (C) - Inner,17201
+97,Sydney East,2001,Hunter's Hill (A),14100
+98,Sydney East,2001,Waverley (A),18050
+99,Sydney East,2001,Burwood (A),11300
+100,Sydney East,2001,Rockdale (C),16650
+101,Sydney East,2001,Lane Cove (A),14700
+102,Sydney East,2001,Manly (A),15150
+103,Sydney East,2001,Hurstville (C),14150
+104,Sydney East,2001,Canterbury (C),11550
+105,Sydney East,2001,Willoughby (C),18250
+106,Sydney East,2001,Ashfield (A),10150
+107,Sydney West,2001,Bankstown (C),10350
+108,Sydney West,2001,Liverpool (C),14900
+109,Sydney West,2001,Blacktown (C) - South-East,10752
+110,Sydney West,2001,Blacktown (C) - South-West,10753
+111,Sydney West,2001,Fairfield (C),12850
+112,Sydney West,2001,Auburn (A),10200
+113,Sydney West,2001,Holroyd (C),13950
+114,Sydney West,2001,Campbelltown (C),11500
+115,Sydney West,2001,Camden (A),11450
+116,Sydney West,2001,Hawkesbury (C),13800
+117,Sydney West,2001,Parramatta (C),16250
+118,Sydney West,2001,Baulkham Hills (A),10500
+119,Sydney West,2001,Blacktown (C) - North,10751
+120,Sydney West,2001,Strathfield (A),17100
+121,Sydney West,2001,Penrith (C),16350
+122,Tamworth,2001,Tamworth (C),17300
+123,Tamworth,2001,Parry (A) - Pt A,16301
+124,Tamworth,2001,Parry (A) - Pt B,16304
+125,Wagga Wagga,2001,Wagga Wagga (C) - Pt B,17754
+126,Wagga Wagga,2001,Wagga Wagga (C) - Pt A,17751
